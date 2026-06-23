@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flytteesker</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --border: #e0ddd6;
+      --accent: #2d5a3d;
+      --accent-light: #e8f0eb;
+      --accent-mid: #4a7c5f;
+      --text: #1a1a18;
+      --muted: #6b6960;
+      --danger: #c0392b;
+      --radius: 10px;
+      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    header {
+      background: var(--accent);
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header .logo { font-size: 1.5rem; }
+    header h1 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+    header p { font-size: 0.8rem; opacity: 0.75; margin-top: 1px; }
+
+    .app { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+    /* VIEW STATE: scanning result */
+    #scan-view { display: none; }
+    .scan-card {
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+    .scan-card .box-icon { font-size: 3rem; margin-bottom: 12px; }
+    .scan-card h2 { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .scan-card .room { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; }
+    .scan-card .items-list {
+      text-align: left;
+      background: var(--accent-light);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .scan-card .items-list h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 10px; }
+    .scan-card .items-list ul { list-style: none; }
+    .scan-card .items-list ul li { padding: 5px 0; border-bottom: 1px solid #d4e0d8; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+    .scan-card .items-list ul li:last-child { border-bottom: none; }
+    .scan-card .items-list ul li::before { content: '·'; color: var(--accent); font-size: 1.2em; }
+    .scan-card .priority { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
+    .priority-high { background: #fde8e6; color: #c0392b; }
+    .priority-medium { background: #fef3e2; color: #d68910; }
+    .priority-low { background: var(--accent-light); color: var(--accent); }
+    .btn-back { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 8px; }
+
+    /* MAIN VIEW */
+    #main-view {}
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      margin-top: 28px;
+    }
+
+    /* New box form */
+    .new-box-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; }
+    label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    input[type=text], select, textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      padding: 9px 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: #fafaf8;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type=text]:focus, select:focus, textarea:focus { border-color: var(--accent); background: white; }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .items-input-area { position: relative; }
+    .items-hint { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary:hover { background: var(--accent-mid); }
+
+    /* Box list */
+    .boxes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .box-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      transition: border-color 0.15s;
+    }
+    .box-card:hover { border-color: var(--accent); }
+    .box-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .box-card h3 { font-size: 1rem; font-weight: 700; }
+    .box-card .room-tag {
+      font-size: 0.7rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .box-card .items-preview {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+      min-height: 36px;
+    }
+    .box-card .card-actions { display: flex; gap: 8px; }
+    .btn-qr {
+      flex: 1;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-delete {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    .btn-delete:hover { border-color: var(--danger); color: var(--danger); }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 14px;
+      padding: 28px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .modal .modal-room { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
+    #qr-container { display: flex; justify-content: center; margin-bottom: 18px; }
+    #qr-container canvas, #qr-container img { border-radius: 6px; }
+    .qr-url { font-size: 0.68rem; color: var(--muted); word-break: break-all; margin-bottom: 16px; background: #f5f5f3; padding: 8px; border-radius: 6px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn-print { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+    .btn-close { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 10px 16px; border-radius: 8px; font-size: 0.88rem; cursor: pointer; }
+
+    /* Print */
+    @media print {
+      body * { display: none !important; }
+      .print-area, .print-area * { display: block !important; }
+      .print-area {
+        position: fixed;
+        inset: 0;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', sans-serif;
+        padding: 20px;
+      }
+      .print-area .print-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+      .print-area .print-room { font-size: 1rem; color: #555; margin-bottom: 16px; }
+      .print-area .print-items { font-size: 0.9rem; color: #333; margin-bottom: 20px; text-align: center; }
+      .print-area canvas, .print-area img { width: 200px; height: 200px; }
+      .print-area .print-hint { font-size: 0.75rem; color: #888; margin-top: 10px; }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .form-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="print-area" id="print-area" style="display:none">
+  <div class="print-title" id="print-title"></div>
+  <div class="print-room" id="print-room"></div>
+  <div class="print-items" id="print-items"></div>
+  <div id="print-qr"></div>
+  <div class="print-hint">Scan for full innhold</div>
+</div>
+
+<header>
+  <div class="logo">📦</div>
+  <div>
+    <h1>Flytteesker</h1>
+    <p>Registrer og finn innhold med QR-kode</p>
+  </div>
+</header>
+
+<!-- SCAN VIEW -->
+<div id="scan-view">
+  <div class="app">
+    <div class="scan-card">
+      <div class="box-icon">📦</div>
+      <h2 id="sv-name"></h2>
+      <div class="room" id="sv-room"></div>
+      <span class="priority" id="sv-priority"></span>
+      <div class="items-list">
+        <h3>Innhold</h3>
+        <ul id="sv-items"></ul>
+      </div>
+      <div id="sv-notes" style="font-size:0.85rem;color:#6b6960;margin-bottom:12px;text-align:left;"></div>
+      <button class="btn-back" onclick="goHome()">← Tilbake til oversikten</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN VIEW -->
+<div id="main-view">
+  <div class="app">
+
+    <div class="section-title">Ny eske</div>
+    <div class="new-box-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Eskenavn</label>
+          <input type="text" id="box-name" placeholder="f.eks. Kjøkken 1" />
+        </div>
+        <div class="form-group">
+          <label>Rom</label>
+          <select id="box-room">
+            <option value="">Velg rom…</option>
+            <option>Kjøkken</option>
+            <option>Stue</option>
+            <option>Soverom</option>
+            <option>Bad</option>
+            <option>Gang</option>
+            <option>Bod</option>
+            <option>Kontor</option>
+            <option>Barnerom</option>
+            <option>Annet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Prioritet</label>
+          <select id="box-priority">
+            <option value="low">Lav – pakkes opp sist</option>
+            <option value="medium">Middels</option>
+            <option value="high">Høy – pakkes opp først</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label>Innhold</label>
+        <textarea id="box-items" placeholder="Skriv ett element per linje:&#10;Tallerken&#10;Kaffekopp&#10;Kjele"></textarea>
+        <span class="items-hint">Ett element per linje</span>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Notater (valgfritt)</label>
+        <input type="text" id="box-notes" placeholder="f.eks. Skjørt – håndter forsiktig" />
+      </div>
+      <button class="btn-primary" onclick="addBox()">
+        <span>+</span> Legg til eske
+      </button>
+    </div>
+
+    <div class="section-title" style="margin-top:32px">Dine esker</div>
+    <div class="boxes-grid" id="boxes-grid">
+      <div class="empty-state">
+        <div class="icon">🗃️</div>
+        <p>Ingen esker ennå.<br>Legg til den første ovenfor.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- QR Modal -->
+<div class="modal-overlay" id="qr-modal">
+  <div class="modal">
+    <h2 id="modal-title"></h2>
+    <div class="modal-room" id="modal-room"></div>
+    <div id="qr-container"></div>
+    <div class="qr-url" id="qr-url-display"></div>
+    <div class="modal-actions">
+      <button class="btn-print" onclick="printLabel()">🖨 Skriv ut etikett</button>
+      <button class="btn-close" onclick="closeModal()">Lukk</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'flytteesker_v1';
+  let boxes = [];
+  let currentQrBox = null;
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      boxes = raw ? JSON.parse(raw) : [];
+    } catch { boxes = []; }
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(boxes));
+  }
+
+  function generateId() {
+    return Math.random().toString(36).slice(2, 9);
+  }
+
+  // Check for scan mode on load
+  function checkScanMode() {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('box');
+    if (data) {
+      try {
+        const box = JSON.parse(atob(data));
+        showScanView(box);
+        return true;
+      } catch { return false; }
+    }
+    return false;
+  }
+
+  function showScanView(box) {
+    document.getElementById('scan-view').style.display = 'block';
+    document.getElementById('main-view').style.display = 'none';
+    document.getElementById('sv-name').textContent = box.name;
+    document.getElementById('sv-room').textContent = box.room || 'Rom ikke angitt';
+
+    const priorityEl = document.getElementById('sv-priority');
+    const pMap = { high: ['Pakkes opp først', 'priority-high'], medium: ['Middels prioritet', 'priority-medium'], low: ['Pakkes opp sist', 'priority-low'] };
+    const [label, cls] = pMap[box.priority] || pMap.low;
+    priorityEl.textContent = label;
+    priorityEl.className = 'priority ' + cls;
+
+    const ul = document.getElementById('sv-items');
+    ul.innerHTML = '';
+    (box.items || []).forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      ul.appendChild(li);
+    });
+
+    const notesEl = document.getElementById('sv-notes');
+    notesEl.textContent = box.notes ? '📝 ' + box.notes : '';
+  }
+
+  function goHome() {
+    window.location.href = window.location.pathname;
+  }
+
+  function makeBoxUrl(box) {
+    const encoded = btoa(JSON.stringify({
+      name: box.name,
+      room: box.room,
+      priority: box.priority,
+      items: box.items,
+      notes: box.notes
+    }));
+    return window.location.origin + window.location.pathname + '?box=' + encodeURIComponent(encoded);
+  }
+
+  function addBox() {
+    const name = document.getElementById('box-name').value.trim();
+    const room = document.getElementById('box-room').value;
+    const priority = document.getElementById('box-priority').value;
+    const itemsRaw = document.getElementById('box-items').value;
+    const notes = document.getElementById('box-notes').value.trim();
+
+    if (!name) { alert('Gi eskeen et navn.'); return; }
+
+    const items = itemsRaw.split('\n').map(s => s.trim()).filter(Boolean);
+
+    const box = { id: generateId(), name, room, priority, items, notes };
+    boxes.push(box);
+    save();
+    renderBoxes();
+
+    // Reset form
+    document.getElementById('box-name').value = '';
+    document.getElementById('box-room').value = '';
+    document.getElementById('box-priority').value = 'low';
+    document.getElementById('box-items').value = '';
+    document.getElementById('box-notes').value = '';
+  }
+
+  function deleteBox(id) {
+    if (!confirm('Slett denne eskeen?')) return;
+    boxes = boxes.filter(b => b.id !== id);
+    save();
+    renderBoxes();
+  }
+
+  function showQr(id) {
+    const box = boxes.find(b => b.id === id);
+    if (!box) return;
+    currentQrBox = box;
+
+    document.getElementById('modal-title').textContent = box.name;
+    document.getElementById('modal-room').textContent = box.room || '';
+
+    const url = makeBoxUrl(box);
+    document.getElementById('qr-url-display').textContent = url;
+
+    const container = document.getElementById('qr-container');
+    container.innerHTML = '';
+    new QRCode(container, {
+      text: url,
+      width: 220,
+      height: 220,
+      colorDark: '#2d5a3d',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    document.getElementById('qr-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('qr-modal').classList.remove('open');
+    currentQrBox = null;
+  }
+
+  function printLabel() {
+    if (!currentQrBox) return;
+    const box = currentQrBox;
+
+    const url = makeBoxUrl(box);
+
+    // Populate print area
+    document.getElementById('print-title').textContent = box.name;
+    document.getElementById('print-room').textContent = box.room || '';
+    document.getElementById('print-items').textContent = (box.items || []).slice(0, 6).join(' · ') + (box.items.length > 6 ? ' …' : '');
+
+    const printQrEl = document.getElementById('print-qr');
+    printQrEl.innerHTML = '';
+    new QRCode(printQrEl, {
+      text: url,
+      width: 200,
+      height: 200,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    document.getElementById('print-area').style.display = 'flex';
+    setTimeout(() => {
+      window.print();
+      document.getElementById('print-area').style.display = 'none';
+    }, 300);
+  }
+
+  function renderBoxes() {
+    const grid = document.getElementById('boxes-grid');
+    if (boxes.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><div class="icon">🗃️</div><p>Ingen esker ennå.<br>Legg til den første ovenfor.</p></div>';
+      return;
+    }
+
+    const pLabel = { high: '🔴 Høy prioritet', medium: '🟡 Middels', low: '🟢 Lav' };
+
+    grid.innerHTML = boxes.map(box => {
+      const preview = box.items.slice(0, 3).join(', ') + (box.items.length > 3 ? ` +${box.items.length - 3} til` : '');
+      return `
+        <div class="box-card">
+          <div class="box-card-header">
+            <h3>📦 ${escHtml(box.name)}</h3>
+            ${box.room ? `<span class="room-tag">${escHtml(box.room)}</span>` : ''}
+          </div>
+          <div class="items-preview">${preview ? escHtml(preview) : '<em>Ingen innhold registrert</em>'}</div>
+          <div style="font-size:0.75rem;color:#6b6960;margin-bottom:10px">${pLabel[box.priority] || ''}</div>
+          <div class="card-actions">
+            <button class="btn-qr" onclick="showQr('${box.id}')">📷 Vis QR-kode</button>
+            <button class="btn-delete" onclick="deleteBox('${box.id}')">🗑</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // Init
+  load();
+  if (!checkScanMode()) {
+    renderBoxes();
+  }
+
+  // Close modal on overlay click
+  document.getElementById('qr-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
