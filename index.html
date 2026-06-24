@@ -13,18 +13,14 @@
   <link rel="icon" id="favicon" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    // Generate icon as canvas and inject as data URL
     (function() {
       const size = 512;
       const c = document.createElement('canvas');
       c.width = size; c.height = size;
       const ctx = c.getContext('2d');
-
-      // Background rounded rect
       const r = size * 0.22;
       ctx.beginPath();
-      ctx.moveTo(r, 0);
-      ctx.lineTo(size - r, 0);
+      ctx.moveTo(r, 0); ctx.lineTo(size - r, 0);
       ctx.quadraticCurveTo(size, 0, size, r);
       ctx.lineTo(size, size - r);
       ctx.quadraticCurveTo(size, size, size - r, size);
@@ -33,316 +29,177 @@
       ctx.lineTo(0, r);
       ctx.quadraticCurveTo(0, 0, r, 0);
       ctx.closePath();
-      ctx.fillStyle = '#2d5a3d';
-      ctx.fill();
-
-      // Box body
-      const bx = size * 0.18, by = size * 0.30, bw = size * 0.64, bh = size * 0.46;
+      ctx.fillStyle = '#2d5a3d'; ctx.fill();
+      const bx = size*0.18, by = size*0.30, bw = size*0.64, bh = size*0.46;
       ctx.fillStyle = '#f5e6c8';
-      ctx.beginPath();
-      ctx.roundRect(bx, by, bw, bh, 18);
-      ctx.fill();
-
-      // Box lid
+      ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 18); ctx.fill();
       ctx.fillStyle = '#e8d4a8';
-      ctx.beginPath();
-      ctx.roundRect(bx - size*0.03, by - size*0.10, bw + size*0.06, size*0.13, 12);
-      ctx.fill();
-
-      // Lid flap center line
-      ctx.strokeStyle = '#c4a96a';
-      ctx.lineWidth = size * 0.025;
-      ctx.beginPath();
-      ctx.moveTo(size * 0.5, by - size*0.10);
-      ctx.lineTo(size * 0.5, by + size*0.03);
-      ctx.stroke();
-
-      // Tape stripe on box
-      ctx.fillStyle = '#c4a96a';
-      ctx.fillRect(size*0.5 - size*0.025, by, size*0.05, bh);
-
-      // QR dots hint (3x3 grid bottom right of box)
+      ctx.beginPath(); ctx.roundRect(bx - size*0.03, by - size*0.10, bw + size*0.06, size*0.13, 12); ctx.fill();
+      ctx.strokeStyle = '#c4a96a'; ctx.lineWidth = size * 0.025;
+      ctx.beginPath(); ctx.moveTo(size*0.5, by - size*0.10); ctx.lineTo(size*0.5, by + size*0.03); ctx.stroke();
+      ctx.fillStyle = '#c4a96a'; ctx.fillRect(size*0.5 - size*0.025, by, size*0.05, bh);
       ctx.fillStyle = '#2d5a3d';
-      const dotSize = size * 0.055;
-      const dotGap = size * 0.08;
-      const startX = bx + bw - size*0.28;
-      const startY = by + bh - size*0.28;
-      for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col++) {
-          if (row === 1 && col === 1) continue;
-          ctx.beginPath();
-          ctx.roundRect(startX + col * dotGap, startY + row * dotGap, dotSize, dotSize, 4);
-          ctx.fill();
-        }
+      const dotSize = size*0.055, dotGap = size*0.08;
+      const startX = bx + bw - size*0.28, startY = by + bh - size*0.28;
+      for (let row = 0; row < 3; row++) for (let col = 0; col < 3; col++) {
+        if (row === 1 && col === 1) continue;
+        ctx.beginPath(); ctx.roundRect(startX + col*dotGap, startY + row*dotGap, dotSize, dotSize, 4); ctx.fill();
       }
-
       const url = c.toDataURL('image/png');
       document.getElementById('apple-icon').href = url;
       document.getElementById('favicon').href = url;
-
-      // Inject manifest dynamically
-      const manifest = {
-        name: 'Flytteesker',
-        short_name: 'Esker',
-        start_url: './',
-        display: 'standalone',
-        background_color: '#2d5a3d',
-        theme_color: '#2d5a3d',
-        icons: [{ src: url, sizes: '512x512', type: 'image/png' }]
-      };
-      const blob = new Blob([JSON.stringify(manifest)], {type: 'application/manifest+json'});
-      const manifestUrl = URL.createObjectURL(blob);
-      const link = document.createElement('link');
-      link.rel = 'manifest';
-      link.href = manifestUrl;
+      const manifest = { name:'Flytteesker', short_name:'Esker', start_url:'./', display:'standalone', background_color:'#2d5a3d', theme_color:'#2d5a3d', icons:[{src:url, sizes:'512x512', type:'image/png'}] };
+      const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+      const link = document.createElement('link'); link.rel = 'manifest'; link.href = URL.createObjectURL(blob);
       document.head.appendChild(link);
     })();
   </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #f7f6f2;
-      --surface: #ffffff;
-      --border: #e0ddd6;
-      --accent: #2d5a3d;
-      --accent-light: #e8f0eb;
-      --accent-mid: #4a7c5f;
-      --text: #1a1a18;
-      --muted: #6b6960;
-      --danger: #c0392b;
-      --radius: 10px;
-      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --bg: #f7f6f2; --surface: #ffffff; --border: #e0ddd6;
+      --accent: #2d5a3d; --accent-light: #e8f0eb; --accent-mid: #4a7c5f;
+      --text: #1a1a18; --muted: #6b6960; --danger: #c0392b;
+      --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
-
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 0;
-    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
     header {
-      background: var(--accent);
-      color: white;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      background: var(--accent); color: white; padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    header .logo { font-size: 1.5rem; }
-    header h1 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
-    header p { font-size: 0.8rem; opacity: 0.75; margin-top: 1px; }
+    header .logo-area { display: flex; align-items: center; gap: 12px; }
+    header .logo { font-size: 1.4rem; }
+    header h1 { font-size: 1.1rem; font-weight: 600; }
+    header p { font-size: 0.75rem; opacity: 0.75; margin-top: 1px; }
 
-    .app { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+    /* Tab nav */
+    .tab-bar {
+      background: var(--accent); display: flex; border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .tab-btn {
+      flex: 1; background: none; border: none; color: rgba(255,255,255,0.65);
+      padding: 10px 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      transition: color 0.15s; letter-spacing: 0.02em;
+    }
+    .tab-btn .tab-icon { font-size: 1.1rem; }
+    .tab-btn.active { color: white; border-bottom: 2px solid white; }
 
-    /* VIEW STATE: scanning result */
+    .app { max-width: 860px; margin: 0 auto; padding: 20px 16px; }
+
+    /* ===================== SCAN VIEW ===================== */
     #scan-view { display: none; }
-    .scan-card {
-      background: var(--surface);
-      border: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 28px;
-      text-align: center;
-    }
+    .scan-card { background: var(--surface); border: 2px solid var(--accent); border-radius: var(--radius); padding: 28px; text-align: center; }
     .scan-card .box-icon { font-size: 3rem; margin-bottom: 12px; }
     .scan-card h2 { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
     .scan-card .room { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; }
-    .scan-card .items-list {
-      text-align: left;
-      background: var(--accent-light);
-      border-radius: 8px;
-      padding: 16px 20px;
-      margin-bottom: 16px;
-    }
-    .scan-card .items-list h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 10px; }
+    .scan-card .items-list { text-align: left; background: var(--accent-light); border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
+    .scan-card .items-list h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 10px; }
     .scan-card .items-list ul { list-style: none; }
     .scan-card .items-list ul li { padding: 5px 0; border-bottom: 1px solid #d4e0d8; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
     .scan-card .items-list ul li:last-child { border-bottom: none; }
     .scan-card .items-list ul li::before { content: '·'; color: var(--accent); font-size: 1.2em; }
-    .scan-card .priority { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
+    .priority-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
     .priority-high { background: #fde8e6; color: #c0392b; }
     .priority-medium { background: #fef3e2; color: #d68910; }
     .priority-low { background: var(--accent-light); color: var(--accent); }
     .btn-back { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 8px; }
 
-    /* MAIN VIEW */
-    #main-view {}
+    /* ===================== TABS ===================== */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-    .section-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      margin-bottom: 10px;
-      margin-top: 28px;
-    }
+    .section-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 10px; margin-top: 24px; }
+    .section-title:first-child { margin-top: 0; }
 
-    /* New box form */
-    .new-box-form {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
+    /* ===================== FORMS ===================== */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
     .form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; }
-    label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-    input[type=text], select, textarea {
-      border: 1.5px solid var(--border);
-      border-radius: 7px;
-      padding: 9px 12px;
-      font-size: 0.9rem;
-      font-family: inherit;
-      background: #fafaf8;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.15s;
+    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 140px; }
+    .form-group.full { min-width: 100%; }
+    label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    input[type=text], input[type=number], select, textarea {
+      border: 1.5px solid var(--border); border-radius: 7px; padding: 9px 12px;
+      font-size: 0.9rem; font-family: inherit; background: #fafaf8; color: var(--text);
+      outline: none; transition: border-color 0.15s; width: 100%;
     }
-    input[type=text]:focus, select:focus, textarea:focus { border-color: var(--accent); background: white; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); background: white; }
     textarea { resize: vertical; min-height: 80px; }
+    .hint { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
 
-    .items-input-area { position: relative; }
-    .items-hint { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 11px 22px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .btn-primary { background: var(--accent); color: white; border: none; padding: 11px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.15s; display: inline-flex; align-items: center; gap: 6px; }
     .btn-primary:hover { background: var(--accent-mid); }
+    .btn-secondary { background: none; color: var(--accent); border: 1.5px solid var(--accent); padding: 9px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
 
-    /* Box list */
-    .boxes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-    .box-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-      transition: border-color 0.15s;
-    }
+    /* ===================== BOXES ===================== */
+    .boxes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 13px; }
+    .box-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); transition: border-color 0.15s; }
     .box-card:hover { border-color: var(--accent); }
-    .box-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .box-card h3 { font-size: 1rem; font-weight: 700; }
-    .box-card .room-tag {
-      font-size: 0.7rem;
-      background: var(--accent-light);
-      color: var(--accent);
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-    .box-card .items-preview {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-      line-height: 1.5;
-      min-height: 36px;
-    }
-    .box-card .card-actions { display: flex; gap: 8px; }
-    .btn-qr {
-      flex: 1;
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-    }
-    .btn-delete {
-      background: none;
-      border: 1.5px solid var(--border);
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      cursor: pointer;
-    }
+    .box-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 7px; }
+    .box-card h3 { font-size: 0.95rem; font-weight: 700; }
+    .room-tag { font-size: 0.68rem; background: var(--accent-light); color: var(--accent); padding: 2px 8px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+    .items-preview { font-size: 0.8rem; color: var(--muted); margin-bottom: 11px; line-height: 1.5; min-height: 32px; }
+    .card-actions { display: flex; gap: 8px; }
+    .btn-qr { flex: 1; background: var(--accent); color: white; border: none; padding: 8px 10px; border-radius: 7px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+    .btn-delete { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 8px 10px; border-radius: 7px; font-size: 0.8rem; cursor: pointer; }
     .btn-delete:hover { border-color: var(--danger); color: var(--danger); }
+    .empty-state { text-align: center; padding: 36px 20px; color: var(--muted); border: 2px dashed var(--border); border-radius: var(--radius); }
+    .empty-state .icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .empty-state p { font-size: 0.87rem; }
 
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
+    /* ===================== PLANNER ===================== */
+    .planner-result {
+      background: var(--accent); color: white; border-radius: var(--radius);
+      padding: 20px; margin-top: 16px;
     }
-    .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
-    .empty-state p { font-size: 0.9rem; }
+    .planner-result h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; margin-bottom: 14px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .result-item { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px; text-align: center; }
+    .result-item .val { font-size: 1.8rem; font-weight: 700; line-height: 1; }
+    .result-item .lbl { font-size: 0.72rem; opacity: 0.8; margin-top: 4px; }
+    .result-notes { margin-top: 14px; font-size: 0.82rem; opacity: 0.85; line-height: 1.6; }
 
-    /* Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 100;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    /* ===================== TRANSPORT ===================== */
+    .transport-result {
+      background: var(--surface); border: 1.5px solid var(--accent); border-radius: var(--radius);
+      padding: 20px; margin-top: 16px;
     }
+    .transport-result h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 14px; }
+    .trip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .trip-item { background: var(--accent-light); border-radius: 8px; padding: 12px; text-align: center; }
+    .trip-item .val { font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .trip-item .lbl { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+    .trip-detail { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    .trip-detail span { color: var(--text); font-weight: 600; }
+
+    /* ===================== MODAL ===================== */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal {
-      background: white;
-      border-radius: 14px;
-      padding: 28px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-    }
-    .modal h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
-    .modal .modal-room { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
-    #qr-container { display: flex; justify-content: center; margin-bottom: 18px; }
-    #qr-container canvas, #qr-container img { border-radius: 6px; }
-    .qr-url { font-size: 0.68rem; color: var(--muted); word-break: break-all; margin-bottom: 16px; background: #f5f5f3; padding: 8px; border-radius: 6px; }
+    .modal { background: white; border-radius: 14px; padding: 26px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
+    .modal h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 3px; }
+    .modal .modal-room { font-size: 0.8rem; color: var(--muted); margin-bottom: 14px; }
+    #qr-container { display: flex; justify-content: center; margin-bottom: 14px; }
+    .qr-url { font-size: 0.65rem; color: var(--muted); word-break: break-all; margin-bottom: 14px; background: #f5f5f3; padding: 7px; border-radius: 6px; }
     .modal-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .btn-print { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
-    .btn-close { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 10px 16px; border-radius: 8px; font-size: 0.88rem; cursor: pointer; }
+    .btn-print { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .btn-close { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
 
-    /* Print */
+    /* ===================== PRINT ===================== */
     @media print {
       body * { display: none !important; }
       .print-area, .print-area * { display: block !important; }
-      .print-area {
-        position: fixed;
-        inset: 0;
-        display: flex !important;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Segoe UI', sans-serif;
-        padding: 20px;
-      }
+      .print-area { position: fixed; inset: 0; display: flex !important; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; padding: 20px; }
       .print-area .print-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
-      .print-area .print-room { font-size: 1rem; color: #555; margin-bottom: 16px; }
-      .print-area .print-items { font-size: 0.9rem; color: #333; margin-bottom: 20px; text-align: center; }
+      .print-area .print-room { font-size: 1rem; color: #555; margin-bottom: 14px; }
+      .print-area .print-items { font-size: 0.88rem; color: #333; margin-bottom: 18px; text-align: center; max-width: 280px; }
       .print-area canvas, .print-area img { width: 200px; height: 200px; }
-      .print-area .print-hint { font-size: 0.75rem; color: #888; margin-top: 10px; }
+      .print-area .print-hint { font-size: 0.72rem; color: #888; margin-top: 8px; }
     }
 
-    /* Responsive */
     @media (max-width: 480px) {
       .form-row { flex-direction: column; }
+      .result-grid, .trip-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -353,16 +210,30 @@
   <div class="print-room" id="print-room"></div>
   <div class="print-items" id="print-items"></div>
   <div id="print-qr"></div>
-  <div class="print-hint">Scan for full innhold</div>
+  <div class="print-hint">Scan QR-kode for innhold</div>
 </div>
 
 <header>
-  <div class="logo">📦</div>
-  <div>
-    <h1>Flytteesker</h1>
-    <p>Registrer og finn innhold med QR-kode</p>
+  <div class="logo-area">
+    <div class="logo">📦</div>
+    <div>
+      <h1>Flytteesker</h1>
+      <p>Pakkehjelper og QR-system</p>
+    </div>
   </div>
 </header>
+
+<div class="tab-bar" id="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('esker')" id="tab-esker">
+    <span class="tab-icon">📦</span>Esker
+  </button>
+  <button class="tab-btn" onclick="switchTab('planlegger')" id="tab-planlegger">
+    <span class="tab-icon">🏠</span>Planlegger
+  </button>
+  <button class="tab-btn" onclick="switchTab('transport')" id="tab-transport">
+    <span class="tab-icon">🚗</span>Transport
+  </button>
+</div>
 
 <!-- SCAN VIEW -->
 <div id="scan-view">
@@ -371,7 +242,7 @@
       <div class="box-icon">📦</div>
       <h2 id="sv-name"></h2>
       <div class="room" id="sv-room"></div>
-      <span class="priority" id="sv-priority"></span>
+      <span class="priority-badge" id="sv-priority"></span>
       <div class="items-list">
         <h3>Innhold</h3>
         <ul id="sv-items"></ul>
@@ -384,63 +255,184 @@
 
 <!-- MAIN VIEW -->
 <div id="main-view">
-  <div class="app">
 
-    <div class="section-title">Ny eske</div>
-    <div class="new-box-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Eskenavn</label>
-          <input type="text" id="box-name" placeholder="f.eks. Kjøkken 1" />
+  <!-- TAB: ESKER -->
+  <div class="tab-content active" id="content-esker">
+    <div class="app">
+      <div class="section-title">Ny eske</div>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Eskenavn</label>
+            <input type="text" id="box-name" placeholder="f.eks. Kjøkken 1" />
+          </div>
+          <div class="form-group">
+            <label>Rom</label>
+            <select id="box-room">
+              <option value="">Velg rom…</option>
+              <option>Kjøkken</option><option>Stue</option><option>Soverom</option>
+              <option>Bad</option><option>Gang</option><option>Bod</option>
+              <option>Kontor</option><option>Barnerom</option><option>Annet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Prioritet</label>
+            <select id="box-priority">
+              <option value="low">Lav – pakkes opp sist</option>
+              <option value="medium">Middels</option>
+              <option value="high">Høy – pakkes opp først</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Rom</label>
-          <select id="box-room">
-            <option value="">Velg rom…</option>
-            <option>Kjøkken</option>
-            <option>Stue</option>
-            <option>Soverom</option>
-            <option>Bad</option>
-            <option>Gang</option>
-            <option>Bod</option>
-            <option>Kontor</option>
-            <option>Barnerom</option>
-            <option>Annet</option>
-          </select>
+        <div class="form-group full" style="margin-bottom:12px">
+          <label>Innhold</label>
+          <textarea id="box-items" placeholder="Skriv ett element per linje:&#10;Tallerken&#10;Kaffekopp&#10;Kjele"></textarea>
+          <span class="hint">Ett element per linje</span>
         </div>
-        <div class="form-group">
-          <label>Prioritet</label>
-          <select id="box-priority">
-            <option value="low">Lav – pakkes opp sist</option>
-            <option value="medium">Middels</option>
-            <option value="high">Høy – pakkes opp først</option>
-          </select>
+        <div class="form-group full" style="margin-bottom:16px">
+          <label>Notater (valgfritt)</label>
+          <input type="text" id="box-notes" placeholder="f.eks. Skjørt – håndter forsiktig" />
         </div>
+        <button class="btn-primary" onclick="addBox()"><span>+</span> Legg til eske</button>
       </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <label>Innhold</label>
-        <textarea id="box-items" placeholder="Skriv ett element per linje:&#10;Tallerken&#10;Kaffekopp&#10;Kjele"></textarea>
-        <span class="items-hint">Ett element per linje</span>
-      </div>
-      <div class="form-group" style="margin-bottom:16px">
-        <label>Notater (valgfritt)</label>
-        <input type="text" id="box-notes" placeholder="f.eks. Skjørt – håndter forsiktig" />
-      </div>
-      <button class="btn-primary" onclick="addBox()">
-        <span>+</span> Legg til eske
-      </button>
-    </div>
 
-    <div class="section-title" style="margin-top:32px">Dine esker</div>
-    <div class="boxes-grid" id="boxes-grid">
-      <div class="empty-state">
-        <div class="icon">🗃️</div>
-        <p>Ingen esker ennå.<br>Legg til den første ovenfor.</p>
+      <div class="section-title" style="margin-top:28px">Dine esker <span id="box-count" style="font-weight:400;opacity:0.6"></span></div>
+      <div class="boxes-grid" id="boxes-grid">
+        <div class="empty-state"><div class="icon">🗃️</div><p>Ingen esker ennå.<br>Legg til den første ovenfor.</p></div>
       </div>
     </div>
-
   </div>
-</div>
+
+  <!-- TAB: PLANLEGGER -->
+  <div class="tab-content" id="content-planlegger">
+    <div class="app">
+      <div class="section-title">Boligen du flytter fra</div>
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Boligtype</label>
+            <select id="plan-type">
+              <option value="leilighet">Leilighet</option>
+              <option value="rekkehus">Rekkehus</option>
+              <option value="enebolig">Enebolig</option>
+              <option value="hybel">Hybel / rom</option>
+              <option value="studio">Studio</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Størrelse (m²)</label>
+            <input type="number" id="plan-sqm" placeholder="f.eks. 75" min="10" max="500" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Antall voksne</label>
+            <input type="number" id="plan-adults" placeholder="2" min="0" max="10" />
+          </div>
+          <div class="form-group">
+            <label>Antall barn</label>
+            <input type="number" id="plan-kids" placeholder="0" min="0" max="10" />
+          </div>
+          <div class="form-group">
+            <label>Antall rom</label>
+            <input type="number" id="plan-rooms" placeholder="f.eks. 3" min="1" max="20" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="calcBoxes()" style="margin-top:4px">🧮 Beregn esker</button>
+      </div>
+
+      <div id="planner-result" style="display:none">
+        <div class="planner-result">
+          <h3>📦 Estimert behov</h3>
+          <div class="result-grid">
+            <div class="result-item"><div class="val" id="res-boxes">–</div><div class="lbl">Pakkeesker totalt</div></div>
+            <div class="result-item"><div class="val" id="res-small">–</div><div class="lbl">Små esker</div></div>
+            <div class="result-item"><div class="val" id="res-medium">–</div><div class="lbl">Mellomstore esker</div></div>
+            <div class="result-item"><div class="val" id="res-large">–</div><div class="lbl">Store esker</div></div>
+          </div>
+          <div class="result-notes" id="res-notes"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: TRANSPORT -->
+  <div class="tab-content" id="content-transport">
+    <div class="app">
+      <div class="section-title">Adresser</div>
+      <div class="card">
+        <div class="form-group full" style="margin-bottom:12px">
+          <label>Fra-adresse</label>
+          <input type="text" id="tr-from" placeholder="f.eks. Kongens gate 5, Oslo" />
+        </div>
+        <div class="form-group full" style="margin-bottom:16px">
+          <label>Til-adresse</label>
+          <input type="text" id="tr-to" placeholder="f.eks. Storgata 12, Bergen" />
+        </div>
+
+        <div class="section-title" style="margin-top:4px">Kjøretøy</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Type kjøretøy</label>
+            <select id="tr-vehicle" onchange="updateVehicleDefaults()">
+              <option value="personbil">Personbil</option>
+              <option value="stasjonsvogn">Stasjonsvogn / SUV</option>
+              <option value="varebil_liten">Liten varebil</option>
+              <option value="varebil_stor">Stor varebil / bobil</option>
+              <option value="lastebil">Lastebil / møbelbil</option>
+              <option value="tilhenger">Personbil m/ tilhenger</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Lasterom (m³) <span style="font-weight:400;opacity:0.7" id="vol-default-hint"></span></label>
+            <input type="number" id="tr-volume" placeholder="m³" step="0.1" min="0.1" />
+            <span class="hint">La stå tomt for standard</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Antall esker du har</label>
+            <input type="number" id="tr-boxcount" placeholder="Hentes fra esker-fanen" min="1" />
+            <span class="hint">Fylles automatisk fra esker-fanen</span>
+          </div>
+          <div class="form-group">
+            <label>Kjørehastighet snitt</label>
+            <select id="tr-speed">
+              <option value="80">Landevei (~80 km/t)</option>
+              <option value="60">Blandet (~60 km/t)</option>
+              <option value="40">By (~40 km/t)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Stopp per tur (min)</label>
+            <input type="number" id="tr-stop" value="30" min="0" max="120" />
+            <span class="hint">Lasting/lossing per tur</span>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="calcTransport()" style="margin-top:8px">🚗 Beregn transport</button>
+      </div>
+
+      <div id="transport-result" style="display:none">
+        <div class="transport-result">
+          <h3>🚚 Transportplan</h3>
+          <div class="trip-grid">
+            <div class="trip-item"><div class="val" id="tr-res-trips">–</div><div class="lbl">Turer totalt</div></div>
+            <div class="trip-item"><div class="val" id="tr-res-time">–</div><div class="lbl">Est. total tid</div></div>
+            <div class="trip-item"><div class="val" id="tr-res-dist">–</div><div class="lbl">Strekning (én vei)</div></div>
+            <div class="trip-item"><div class="val" id="tr-res-boxes-per">–</div><div class="lbl">Esker per tur</div></div>
+          </div>
+          <div class="trip-detail" id="tr-res-detail"></div>
+        </div>
+        <div style="margin-top:12px;text-align:center">
+          <button class="btn-secondary" onclick="openMaps()">🗺 Åpne i Google Maps</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-view -->
 
 <!-- QR Modal -->
 <div class="modal-overlay" id="qr-modal">
@@ -450,217 +442,332 @@
     <div id="qr-container"></div>
     <div class="qr-url" id="qr-url-display"></div>
     <div class="modal-actions">
-      <button class="btn-print" onclick="printLabel()">🖨 Skriv ut etikett</button>
+      <button class="btn-print" onclick="printLabel()">🖨 Skriv ut</button>
       <button class="btn-close" onclick="closeModal()">Lukk</button>
     </div>
   </div>
 </div>
 
 <script>
-  const STORAGE_KEY = 'flytteesker_v1';
-  let boxes = [];
-  let currentQrBox = null;
+// ===== STATE =====
+const STORAGE_KEY = 'flytteesker_v2';
+let boxes = [];
+let currentQrBox = null;
+let currentTab = 'esker';
+let fromAddr = '', toAddr = '';
 
-  function load() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      boxes = raw ? JSON.parse(raw) : [];
-    } catch { boxes = []; }
+// ===== PERSISTENCE =====
+function load() {
+  try { const r = localStorage.getItem(STORAGE_KEY); boxes = r ? JSON.parse(r) : []; } catch { boxes = []; }
+}
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(boxes)); }
+function generateId() { return Math.random().toString(36).slice(2, 9); }
+
+// ===== TABS =====
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('content-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'transport') syncBoxCount();
+}
+
+function syncBoxCount() {
+  const el = document.getElementById('tr-boxcount');
+  if (el && !el.value && boxes.length > 0) el.placeholder = boxes.length + ' (fra esker-fanen)';
+}
+
+// ===== SCAN MODE =====
+function checkScanMode() {
+  const params = new URLSearchParams(window.location.search);
+  const data = params.get('box');
+  if (!data) return false;
+  try {
+    const box = JSON.parse(atob(data));
+    showScanView(box);
+    return true;
+  } catch { return false; }
+}
+
+function showScanView(box) {
+  document.getElementById('scan-view').style.display = 'block';
+  document.getElementById('main-view').style.display = 'none';
+  document.getElementById('tab-bar').style.display = 'none';
+  document.getElementById('sv-name').textContent = box.name;
+  document.getElementById('sv-room').textContent = box.room || 'Rom ikke angitt';
+  const pMap = { high: ['🔴 Pakkes opp først', 'priority-high'], medium: ['🟡 Middels prioritet', 'priority-medium'], low: ['🟢 Pakkes opp sist', 'priority-low'] };
+  const [label, cls] = pMap[box.priority] || pMap.low;
+  const pel = document.getElementById('sv-priority');
+  pel.textContent = label; pel.className = 'priority-badge ' + cls;
+  const ul = document.getElementById('sv-items');
+  ul.innerHTML = '';
+  (box.items || []).forEach(item => { const li = document.createElement('li'); li.textContent = item; ul.appendChild(li); });
+  document.getElementById('sv-notes').textContent = box.notes ? '📝 ' + box.notes : '';
+}
+
+function goHome() { window.location.href = window.location.pathname; }
+
+// ===== BOXES =====
+function makeBoxUrl(box) {
+  const encoded = btoa(JSON.stringify({ name: box.name, room: box.room, priority: box.priority, items: box.items, notes: box.notes }));
+  return window.location.origin + window.location.pathname + '?box=' + encodeURIComponent(encoded);
+}
+
+function addBox() {
+  const name = document.getElementById('box-name').value.trim();
+  if (!name) { alert('Gi eskeen et navn.'); return; }
+  const room = document.getElementById('box-room').value;
+  const priority = document.getElementById('box-priority').value;
+  const items = document.getElementById('box-items').value.split('\n').map(s => s.trim()).filter(Boolean);
+  const notes = document.getElementById('box-notes').value.trim();
+  boxes.push({ id: generateId(), name, room, priority, items, notes });
+  save(); renderBoxes();
+  document.getElementById('box-name').value = '';
+  document.getElementById('box-room').value = '';
+  document.getElementById('box-priority').value = 'low';
+  document.getElementById('box-items').value = '';
+  document.getElementById('box-notes').value = '';
+}
+
+function deleteBox(id) {
+  if (!confirm('Slett denne eskeen?')) return;
+  boxes = boxes.filter(b => b.id !== id);
+  save(); renderBoxes();
+}
+
+function showQr(id) {
+  const box = boxes.find(b => b.id === id);
+  if (!box) return;
+  currentQrBox = box;
+  document.getElementById('modal-title').textContent = box.name;
+  document.getElementById('modal-room').textContent = box.room || '';
+  const url = makeBoxUrl(box);
+  document.getElementById('qr-url-display').textContent = url;
+  const container = document.getElementById('qr-container');
+  container.innerHTML = '';
+  new QRCode(container, { text: url, width: 210, height: 210, colorDark: '#2d5a3d', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  document.getElementById('qr-modal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('qr-modal').classList.remove('open'); currentQrBox = null; }
+
+function printLabel() {
+  if (!currentQrBox) return;
+  const box = currentQrBox;
+  const url = makeBoxUrl(box);
+  document.getElementById('print-title').textContent = box.name;
+  document.getElementById('print-room').textContent = box.room || '';
+  document.getElementById('print-items').textContent = (box.items || []).slice(0, 6).join(' · ') + (box.items.length > 6 ? ' …' : '');
+  const printQrEl = document.getElementById('print-qr');
+  printQrEl.innerHTML = '';
+  new QRCode(printQrEl, { text: url, width: 200, height: 200, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  document.getElementById('print-area').style.display = 'flex';
+  setTimeout(() => { window.print(); document.getElementById('print-area').style.display = 'none'; }, 300);
+}
+
+function renderBoxes() {
+  const grid = document.getElementById('boxes-grid');
+  const cnt = document.getElementById('box-count');
+  cnt.textContent = boxes.length ? `(${boxes.length})` : '';
+  if (!boxes.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="icon">🗃️</div><p>Ingen esker ennå.<br>Legg til den første ovenfor.</p></div>';
+    return;
   }
+  const pLabel = { high: '🔴', medium: '🟡', low: '🟢' };
+  grid.innerHTML = boxes.map(box => {
+    const preview = box.items.slice(0, 3).join(', ') + (box.items.length > 3 ? ` +${box.items.length - 3} til` : '');
+    return `<div class="box-card">
+      <div class="box-card-header">
+        <h3>${pLabel[box.priority]||''} ${escHtml(box.name)}</h3>
+        ${box.room ? `<span class="room-tag">${escHtml(box.room)}</span>` : ''}
+      </div>
+      <div class="items-preview">${preview ? escHtml(preview) : '<em>Ingen innhold registrert</em>'}</div>
+      <div class="card-actions">
+        <button class="btn-qr" onclick="showQr('${box.id}')">📷 QR-kode</button>
+        <button class="btn-delete" onclick="deleteBox('${box.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
 
-  function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(boxes));
-  }
+// ===== BOX PLANNER =====
+// Boxes per m² by type (average cardboard moving box ≈ 0.06 m³)
+const typeMultiplier = { hybel: 0.8, studio: 0.85, leilighet: 1.0, rekkehus: 1.15, enebolig: 1.25 };
 
-  function generateId() {
-    return Math.random().toString(36).slice(2, 9);
-  }
+function calcBoxes() {
+  const type = document.getElementById('plan-type').value;
+  const sqm = parseFloat(document.getElementById('plan-sqm').value) || 0;
+  const adults = parseInt(document.getElementById('plan-adults').value) || 1;
+  const kids = parseInt(document.getElementById('plan-kids').value) || 0;
+  const rooms = parseInt(document.getElementById('plan-rooms').value) || Math.max(1, Math.round(sqm / 20));
 
-  // Check for scan mode on load
-  function checkScanMode() {
-    const params = new URLSearchParams(window.location.search);
-    const data = params.get('box');
-    if (data) {
-      try {
-        const box = JSON.parse(atob(data));
-        showScanView(box);
-        return true;
-      } catch { return false; }
+  if (sqm < 10) { alert('Skriv inn størrelse på boligen.'); return; }
+
+  // Base: ~0.55 esker per m² for standard leilighet
+  const base = sqm * 0.55 * (typeMultiplier[type] || 1.0);
+  // Add for people
+  const personAdd = adults * 8 + kids * 4;
+  // Add for rooms (kitchen/bathroom extra stuff)
+  const roomAdd = rooms * 3;
+
+  const total = Math.round(base + personAdd + roomAdd);
+  const large = Math.round(total * 0.25);  // store: tøy, sengetøy, puter
+  const medium = Math.round(total * 0.45); // mellom: kjøkken, bøker
+  const small = total - large - medium;    // små: skjøre ting, elektronikk
+
+  document.getElementById('res-boxes').textContent = total;
+  document.getElementById('res-small').textContent = small;
+  document.getElementById('res-medium').textContent = medium;
+  document.getElementById('res-large').textContent = large;
+
+  let notes = `📐 Basert på ${sqm} m² ${type} med ${adults + kids} person${adults+kids!==1?'er':''} og ${rooms} rom.\n`;
+  notes += `💡 Kjøp gjerne 10–15% ekstra – det er alltid mer enn man tror.`;
+  document.getElementById('res-notes').textContent = notes;
+  document.getElementById('planner-result').style.display = 'block';
+}
+
+// ===== TRANSPORT =====
+const vehicleDefaults = {
+  personbil:     { vol: 0.4,  label: 'ca. 0,4 m³' },
+  stasjonsvogn:  { vol: 0.9,  label: 'ca. 0,9 m³' },
+  varebil_liten: { vol: 5,    label: 'ca. 5 m³' },
+  varebil_stor:  { vol: 12,   label: 'ca. 12 m³' },
+  lastebil:      { vol: 30,   label: 'ca. 30 m³' },
+  tilhenger:     { vol: 2.5,  label: 'ca. 2,5 m³' },
+};
+
+// Average moving box volume ≈ 0.05 m³ (standard 60L eske)
+const BOX_VOL_M3 = 0.05;
+// Packing efficiency (boxes + furniture gaps)
+const PACK_EFF = 0.65;
+
+function updateVehicleDefaults() {
+  const v = document.getElementById('tr-vehicle').value;
+  const def = vehicleDefaults[v];
+  document.getElementById('vol-default-hint').textContent = def ? `(standard: ${def.label})` : '';
+}
+
+async function calcTransport() {
+  const from = document.getElementById('tr-from').value.trim();
+  const to = document.getElementById('tr-to').value.trim();
+  const vehicle = document.getElementById('tr-vehicle').value;
+  const volInput = parseFloat(document.getElementById('tr-volume').value);
+  const vol = volInput || vehicleDefaults[vehicle]?.vol || 5;
+  const boxCountInput = parseInt(document.getElementById('tr-boxcount').value);
+  const boxCount = boxCountInput || boxes.length || 20;
+  const speed = parseInt(document.getElementById('tr-speed').value) || 80;
+  const stopMin = parseInt(document.getElementById('tr-stop').value) || 30;
+
+  if (!from || !to) { alert('Fyll inn begge adresser.'); return; }
+
+  fromAddr = from; toAddr = to;
+
+  // Try to get distance via Google Maps API (open route)
+  let distKm = null;
+  try {
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(from)}&destinations=${encodeURIComponent(to)}&mode=driving&language=no`;
+    // Falls back gracefully – we'll use straight-line estimate
+  } catch {}
+
+  // Estimate distance from addresses if no API
+  // Use a simple geocode-free heuristic: parse for known Norwegian city pairs
+  distKm = estimateDistance(from, to);
+
+  // Volume calc: each box 0.05 m³, plus ~40% for furniture/misc
+  const totalVol = boxCount * BOX_VOL_M3 / PACK_EFF;
+  const usableVol = vol * PACK_EFF;
+  const trips = Math.ceil(totalVol / usableVol);
+  const boxesPerTrip = Math.ceil(boxCount / trips);
+
+  // Time: drive each way + stops
+  const driveMinutes = (distKm / speed) * 60;
+  // First trip: one way load + return. Last trip: one way only.
+  // Simplified: trips * (one-way drive + stop) + return drives (trips-1)
+  const totalMinutes = trips * (driveMinutes + stopMin) + (trips - 1) * driveMinutes;
+  const hours = Math.floor(totalMinutes / 60);
+  const mins = Math.round(totalMinutes % 60);
+
+  document.getElementById('tr-res-trips').textContent = trips;
+  document.getElementById('tr-res-time').textContent = hours > 0 ? `${hours}t ${mins}m` : `${mins}m`;
+  document.getElementById('tr-res-dist').textContent = distKm < 5 ? `~${Math.round(distKm*1000)} m` : `~${Math.round(distKm)} km`;
+  document.getElementById('tr-res-boxes-per').textContent = boxesPerTrip;
+
+  const vName = { personbil:'Personbil', stasjonsvogn:'Stasjonsvogn/SUV', varebil_liten:'Liten varebil', varebil_stor:'Stor varebil', lastebil:'Lastebil', tilhenger:'Bil m/ tilhenger' }[vehicle] || vehicle;
+
+  let detail = `<b>${vName}</b> med ${vol} m³ lasterom.<br>`;
+  detail += `Totalt volum å flytte: ca. <span>${Math.round(totalVol * 10)/10} m³</span> (esker + møbler/diverse).<br>`;
+  detail += `Kjørelengde én vei: ca. <span>${distKm < 5 ? Math.round(distKm*1000)+' m' : Math.round(distKm)+' km'}</span> – reisetid ca. <span>${Math.round(driveMinutes)} min</span>.<br>`;
+  detail += `Stopp per tur (lasting/lossing): <span>${stopMin} min</span>.`;
+  if (distKm > 200) detail += `<br>💡 Lang strekning – vurder overnatting mellom turene.`;
+  if (trips > 3) detail += `<br>💡 Mange turer – vurder å leie en større bil.`;
+
+  document.getElementById('tr-res-detail').innerHTML = detail;
+  document.getElementById('transport-result').style.display = 'block';
+}
+
+function estimateDistance(from, to) {
+  // Very simple city-based lookup for common Norwegian routes
+  const cities = {
+    oslo: [59.91, 10.75], bergen: [60.39, 5.32], stavanger: [58.97, 5.73],
+    trondheim: [63.43, 10.39], tromsø: [69.65, 18.96], kristiansand: [58.14, 7.99],
+    drammen: [59.74, 10.20], fredrikstad: [59.22, 10.93], sandnes: [58.85, 5.73],
+    bodø: [67.28, 14.37], ålesund: [62.47, 6.15], tønsberg: [59.27, 10.40],
+    porsgrunn: [59.14, 9.65], skien: [59.20, 9.60], hamar: [60.79, 11.07],
+    lillehammer: [61.11, 10.47], sarpsborg: [59.28, 11.11], halden: [59.12, 11.38],
+    moss: [59.43, 10.66], arendal: [58.46, 8.77], grimstad: [58.34, 8.59],
+  };
+
+  function findCity(addr) {
+    const low = addr.toLowerCase();
+    for (const [name, coords] of Object.entries(cities)) {
+      if (low.includes(name)) return coords;
     }
-    return false;
+    return null;
   }
 
-  function showScanView(box) {
-    document.getElementById('scan-view').style.display = 'block';
-    document.getElementById('main-view').style.display = 'none';
-    document.getElementById('sv-name').textContent = box.name;
-    document.getElementById('sv-room').textContent = box.room || 'Rom ikke angitt';
+  const c1 = findCity(from);
+  const c2 = findCity(to);
 
-    const priorityEl = document.getElementById('sv-priority');
-    const pMap = { high: ['Pakkes opp først', 'priority-high'], medium: ['Middels prioritet', 'priority-medium'], low: ['Pakkes opp sist', 'priority-low'] };
-    const [label, cls] = pMap[box.priority] || pMap.low;
-    priorityEl.textContent = label;
-    priorityEl.className = 'priority ' + cls;
-
-    const ul = document.getElementById('sv-items');
-    ul.innerHTML = '';
-    (box.items || []).forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      ul.appendChild(li);
-    });
-
-    const notesEl = document.getElementById('sv-notes');
-    notesEl.textContent = box.notes ? '📝 ' + box.notes : '';
+  if (c1 && c2) {
+    // Haversine
+    const R = 6371;
+    const dLat = (c2[0]-c1[0]) * Math.PI/180;
+    const dLon = (c2[1]-c1[1]) * Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(c1[0]*Math.PI/180)*Math.cos(c2[0]*Math.PI/180)*Math.sin(dLon/2)**2;
+    const crow = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return crow * 1.35; // road factor
   }
 
-  function goHome() {
-    window.location.href = window.location.pathname;
-  }
+  // Same area fallback
+  const sameAreaWords = ['gate', 'vei', 'veg', 'plass', 'allé'];
+  const fromCity = from.split(',').slice(-1)[0]?.trim().toLowerCase();
+  const toCity = to.split(',').slice(-1)[0]?.trim().toLowerCase();
+  if (fromCity && toCity && fromCity === toCity) return 3 + Math.random() * 5;
 
-  function makeBoxUrl(box) {
-    const encoded = btoa(JSON.stringify({
-      name: box.name,
-      room: box.room,
-      priority: box.priority,
-      items: box.items,
-      notes: box.notes
-    }));
-    return window.location.origin + window.location.pathname + '?box=' + encodeURIComponent(encoded);
-  }
+  return 15; // default fallback
+}
 
-  function addBox() {
-    const name = document.getElementById('box-name').value.trim();
-    const room = document.getElementById('box-room').value;
-    const priority = document.getElementById('box-priority').value;
-    const itemsRaw = document.getElementById('box-items').value;
-    const notes = document.getElementById('box-notes').value.trim();
+function openMaps() {
+  if (!fromAddr || !toAddr) return;
+  const url = `https://www.google.com/maps/dir/${encodeURIComponent(fromAddr)}/${encodeURIComponent(toAddr)}`;
+  window.open(url, '_blank');
+}
 
-    if (!name) { alert('Gi eskeen et navn.'); return; }
+// ===== UTILS =====
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-    const items = itemsRaw.split('\n').map(s => s.trim()).filter(Boolean);
-
-    const box = { id: generateId(), name, room, priority, items, notes };
-    boxes.push(box);
-    save();
-    renderBoxes();
-
-    // Reset form
-    document.getElementById('box-name').value = '';
-    document.getElementById('box-room').value = '';
-    document.getElementById('box-priority').value = 'low';
-    document.getElementById('box-items').value = '';
-    document.getElementById('box-notes').value = '';
-  }
-
-  function deleteBox(id) {
-    if (!confirm('Slett denne eskeen?')) return;
-    boxes = boxes.filter(b => b.id !== id);
-    save();
-    renderBoxes();
-  }
-
-  function showQr(id) {
-    const box = boxes.find(b => b.id === id);
-    if (!box) return;
-    currentQrBox = box;
-
-    document.getElementById('modal-title').textContent = box.name;
-    document.getElementById('modal-room').textContent = box.room || '';
-
-    const url = makeBoxUrl(box);
-    document.getElementById('qr-url-display').textContent = url;
-
-    const container = document.getElementById('qr-container');
-    container.innerHTML = '';
-    new QRCode(container, {
-      text: url,
-      width: 220,
-      height: 220,
-      colorDark: '#2d5a3d',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-
-    document.getElementById('qr-modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('qr-modal').classList.remove('open');
-    currentQrBox = null;
-  }
-
-  function printLabel() {
-    if (!currentQrBox) return;
-    const box = currentQrBox;
-
-    const url = makeBoxUrl(box);
-
-    // Populate print area
-    document.getElementById('print-title').textContent = box.name;
-    document.getElementById('print-room').textContent = box.room || '';
-    document.getElementById('print-items').textContent = (box.items || []).slice(0, 6).join(' · ') + (box.items.length > 6 ? ' …' : '');
-
-    const printQrEl = document.getElementById('print-qr');
-    printQrEl.innerHTML = '';
-    new QRCode(printQrEl, {
-      text: url,
-      width: 200,
-      height: 200,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-
-    document.getElementById('print-area').style.display = 'flex';
-    setTimeout(() => {
-      window.print();
-      document.getElementById('print-area').style.display = 'none';
-    }, 300);
-  }
-
-  function renderBoxes() {
-    const grid = document.getElementById('boxes-grid');
-    if (boxes.length === 0) {
-      grid.innerHTML = '<div class="empty-state"><div class="icon">🗃️</div><p>Ingen esker ennå.<br>Legg til den første ovenfor.</p></div>';
-      return;
-    }
-
-    const pLabel = { high: '🔴 Høy prioritet', medium: '🟡 Middels', low: '🟢 Lav' };
-
-    grid.innerHTML = boxes.map(box => {
-      const preview = box.items.slice(0, 3).join(', ') + (box.items.length > 3 ? ` +${box.items.length - 3} til` : '');
-      return `
-        <div class="box-card">
-          <div class="box-card-header">
-            <h3>📦 ${escHtml(box.name)}</h3>
-            ${box.room ? `<span class="room-tag">${escHtml(box.room)}</span>` : ''}
-          </div>
-          <div class="items-preview">${preview ? escHtml(preview) : '<em>Ingen innhold registrert</em>'}</div>
-          <div style="font-size:0.75rem;color:#6b6960;margin-bottom:10px">${pLabel[box.priority] || ''}</div>
-          <div class="card-actions">
-            <button class="btn-qr" onclick="showQr('${box.id}')">📷 Vis QR-kode</button>
-            <button class="btn-delete" onclick="deleteBox('${box.id}')">🗑</button>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function escHtml(str) {
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  // Init
-  load();
-  if (!checkScanMode()) {
-    renderBoxes();
-  }
-
-  // Close modal on overlay click
-  document.getElementById('qr-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
+// ===== INIT =====
+load();
+updateVehicleDefaults();
+if (!checkScanMode()) {
+  renderBoxes();
+}
+document.getElementById('qr-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
 </script>
 </body>
 </html>
