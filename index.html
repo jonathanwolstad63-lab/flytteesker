@@ -63,32 +63,16 @@
       --radius: 10px; --shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-    header {
-      background: var(--accent); color: white; padding: 16px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    header { background: var(--accent); color: white; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
     header .logo-area { display: flex; align-items: center; gap: 12px; }
     header .logo { font-size: 1.4rem; }
     header h1 { font-size: 1.1rem; font-weight: 600; }
     header p { font-size: 0.75rem; opacity: 0.75; margin-top: 1px; }
-
-    /* Tab nav */
-    .tab-bar {
-      background: var(--accent); display: flex; border-top: 1px solid rgba(255,255,255,0.15);
-    }
-    .tab-btn {
-      flex: 1; background: none; border: none; color: rgba(255,255,255,0.65);
-      padding: 10px 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
-      transition: color 0.15s; letter-spacing: 0.02em;
-    }
+    .tab-bar { background: var(--accent); display: flex; border-top: 1px solid rgba(255,255,255,0.15); }
+    .tab-btn { flex: 1; background: none; border: none; color: rgba(255,255,255,0.65); padding: 10px 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color 0.15s; }
     .tab-btn .tab-icon { font-size: 1.1rem; }
     .tab-btn.active { color: white; border-bottom: 2px solid white; }
-
     .app { max-width: 860px; margin: 0 auto; padding: 20px 16px; }
-
-    /* ===================== SCAN VIEW ===================== */
     #scan-view { display: none; }
     .scan-card { background: var(--surface); border: 2px solid var(--accent); border-radius: var(--radius); padding: 28px; text-align: center; }
     .scan-card .box-icon { font-size: 3rem; margin-bottom: 12px; }
@@ -105,34 +89,22 @@
     .priority-medium { background: #fef3e2; color: #d68910; }
     .priority-low { background: var(--accent-light); color: var(--accent); }
     .btn-back { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 8px; }
-
-    /* ===================== TABS ===================== */
     .tab-content { display: none; }
     .tab-content.active { display: block; }
-
     .section-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 10px; margin-top: 24px; }
     .section-title:first-child { margin-top: 0; }
-
-    /* ===================== FORMS ===================== */
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
-    .form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 140px; }
-    .form-group.full { min-width: 100%; }
+    .form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: flex-end; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 130px; }
+    .form-group.full { min-width: 100%; flex: 100%; }
     label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-    input[type=text], input[type=number], select, textarea {
-      border: 1.5px solid var(--border); border-radius: 7px; padding: 9px 12px;
-      font-size: 0.9rem; font-family: inherit; background: #fafaf8; color: var(--text);
-      outline: none; transition: border-color 0.15s; width: 100%;
-    }
+    input[type=text], input[type=number], select, textarea { border: 1.5px solid var(--border); border-radius: 7px; padding: 9px 12px; font-size: 0.9rem; font-family: inherit; background: #fafaf8; color: var(--text); outline: none; transition: border-color 0.15s; width: 100%; }
     input:focus, select:focus, textarea:focus { border-color: var(--accent); background: white; }
     textarea { resize: vertical; min-height: 80px; }
     .hint { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
-
-    .btn-primary { background: var(--accent); color: white; border: none; padding: 11px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.15s; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background: var(--accent); color: white; border: none; padding: 11px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.15s; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
     .btn-primary:hover { background: var(--accent-mid); }
     .btn-secondary { background: none; color: var(--accent); border: 1.5px solid var(--accent); padding: 9px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
-
-    /* ===================== BOXES ===================== */
     .boxes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 13px; }
     .box-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 15px; box-shadow: var(--shadow); transition: border-color 0.15s; }
     .box-card:hover { border-color: var(--accent); }
@@ -147,24 +119,14 @@
     .empty-state { text-align: center; padding: 36px 20px; color: var(--muted); border: 2px dashed var(--border); border-radius: var(--radius); }
     .empty-state .icon { font-size: 2.2rem; margin-bottom: 10px; }
     .empty-state p { font-size: 0.87rem; }
-
-    /* ===================== PLANNER ===================== */
-    .planner-result {
-      background: var(--accent); color: white; border-radius: var(--radius);
-      padding: 20px; margin-top: 16px;
-    }
+    .planner-result { background: var(--accent); color: white; border-radius: var(--radius); padding: 20px; margin-top: 16px; }
     .planner-result h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; margin-bottom: 14px; }
     .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .result-item { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px; text-align: center; }
     .result-item .val { font-size: 1.8rem; font-weight: 700; line-height: 1; }
     .result-item .lbl { font-size: 0.72rem; opacity: 0.8; margin-top: 4px; }
     .result-notes { margin-top: 14px; font-size: 0.82rem; opacity: 0.85; line-height: 1.6; }
-
-    /* ===================== TRANSPORT ===================== */
-    .transport-result {
-      background: var(--surface); border: 1.5px solid var(--accent); border-radius: var(--radius);
-      padding: 20px; margin-top: 16px;
-    }
+    .transport-result { background: var(--surface); border: 1.5px solid var(--accent); border-radius: var(--radius); padding: 20px; margin-top: 16px; }
     .transport-result h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 14px; }
     .trip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
     .trip-item { background: var(--accent-light); border-radius: 8px; padding: 12px; text-align: center; }
@@ -173,7 +135,13 @@
     .trip-detail { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
     .trip-detail span { color: var(--text); font-weight: 600; }
 
-    /* ===================== MODAL ===================== */
+    /* Furniture list */
+    .furn-item-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg); border-radius: 7px; margin-bottom: 6px; font-size: 0.85rem; }
+    .furn-item-row .furn-name { flex: 1; }
+    .furn-item-row .furn-vol { color: var(--muted); font-size: 0.78rem; margin: 0 12px; white-space: nowrap; }
+    .furn-item-row .furn-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 0 4px; }
+    .furn-item-row .furn-del:hover { color: var(--danger); }
+
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
     .modal { background: white; border-radius: 14px; padding: 26px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
@@ -184,8 +152,6 @@
     .modal-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .btn-print { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
     .btn-close { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
-
-    /* ===================== PRINT ===================== */
     @media print {
       body * { display: none !important; }
       .print-area, .print-area * { display: block !important; }
@@ -196,8 +162,7 @@
       .print-area canvas, .print-area img { width: 200px; height: 200px; }
       .print-area .print-hint { font-size: 0.72rem; color: #888; margin-top: 8px; }
     }
-
-    @media (max-width: 480px) {
+    @media (max-width: 520px) {
       .form-row { flex-direction: column; }
       .result-grid, .trip-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -216,23 +181,13 @@
 <header>
   <div class="logo-area">
     <div class="logo">📦</div>
-    <div>
-      <h1>Flytteesker</h1>
-      <p>Pakkehjelper og QR-system</p>
-    </div>
+    <div><h1>Flytteesker</h1><p>Pakkehjelper og QR-system</p></div>
   </div>
 </header>
-
 <div class="tab-bar" id="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('esker')" id="tab-esker">
-    <span class="tab-icon">📦</span>Esker
-  </button>
-  <button class="tab-btn" onclick="switchTab('planlegger')" id="tab-planlegger">
-    <span class="tab-icon">🏠</span>Planlegger
-  </button>
-  <button class="tab-btn" onclick="switchTab('transport')" id="tab-transport">
-    <span class="tab-icon">🚗</span>Transport
-  </button>
+  <button class="tab-btn active" onclick="switchTab('esker')" id="tab-esker"><span class="tab-icon">📦</span>Esker</button>
+  <button class="tab-btn" onclick="switchTab('planlegger')" id="tab-planlegger"><span class="tab-icon">🏠</span>Planlegger</button>
+  <button class="tab-btn" onclick="switchTab('transport')" id="tab-transport"><span class="tab-icon">🚗</span>Transport</button>
 </div>
 
 <!-- SCAN VIEW -->
@@ -243,10 +198,7 @@
       <h2 id="sv-name"></h2>
       <div class="room" id="sv-room"></div>
       <span class="priority-badge" id="sv-priority"></span>
-      <div class="items-list">
-        <h3>Innhold</h3>
-        <ul id="sv-items"></ul>
-      </div>
+      <div class="items-list"><h3>Innhold</h3><ul id="sv-items"></ul></div>
       <div id="sv-notes" style="font-size:0.85rem;color:#6b6960;margin-bottom:12px;text-align:left;"></div>
       <button class="btn-back" onclick="goHome()">← Tilbake til oversikten</button>
     </div>
@@ -262,12 +214,8 @@
       <div class="section-title">Ny eske</div>
       <div class="card">
         <div class="form-row">
-          <div class="form-group">
-            <label>Eskenavn</label>
-            <input type="text" id="box-name" placeholder="f.eks. Kjøkken 1" />
-          </div>
-          <div class="form-group">
-            <label>Rom</label>
+          <div class="form-group"><label>Eskenavn</label><input type="text" id="box-name" placeholder="f.eks. Kjøkken 1" /></div>
+          <div class="form-group"><label>Rom</label>
             <select id="box-room">
               <option value="">Velg rom…</option>
               <option>Kjøkken</option><option>Stue</option><option>Soverom</option>
@@ -275,8 +223,7 @@
               <option>Kontor</option><option>Barnerom</option><option>Annet</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Prioritet</label>
+          <div class="form-group"><label>Prioritet</label>
             <select id="box-priority">
               <option value="low">Lav – pakkes opp sist</option>
               <option value="medium">Middels</option>
@@ -295,7 +242,6 @@
         </div>
         <button class="btn-primary" onclick="addBox()"><span>+</span> Legg til eske</button>
       </div>
-
       <div class="section-title" style="margin-top:28px">Dine esker <span id="box-count" style="font-weight:400;opacity:0.6"></span></div>
       <div class="boxes-grid" id="boxes-grid">
         <div class="empty-state"><div class="icon">🗃️</div><p>Ingen esker ennå.<br>Legg til den første ovenfor.</p></div>
@@ -309,8 +255,7 @@
       <div class="section-title">Boligen du flytter fra</div>
       <div class="card">
         <div class="form-row">
-          <div class="form-group">
-            <label>Boligtype</label>
+          <div class="form-group"><label>Boligtype</label>
             <select id="plan-type">
               <option value="leilighet">Leilighet</option>
               <option value="rekkehus">Rekkehus</option>
@@ -319,28 +264,15 @@
               <option value="studio">Studio</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Størrelse (m²)</label>
-            <input type="number" id="plan-sqm" placeholder="f.eks. 75" min="10" max="500" />
-          </div>
+          <div class="form-group"><label>Størrelse (m²)</label><input type="number" id="plan-sqm" placeholder="f.eks. 75" min="10" max="500" /></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Antall voksne</label>
-            <input type="number" id="plan-adults" placeholder="2" min="0" max="10" />
-          </div>
-          <div class="form-group">
-            <label>Antall barn</label>
-            <input type="number" id="plan-kids" placeholder="0" min="0" max="10" />
-          </div>
-          <div class="form-group">
-            <label>Antall rom</label>
-            <input type="number" id="plan-rooms" placeholder="f.eks. 3" min="1" max="20" />
-          </div>
+          <div class="form-group"><label>Antall voksne</label><input type="number" id="plan-adults" placeholder="2" min="0" max="10" /></div>
+          <div class="form-group"><label>Antall barn</label><input type="number" id="plan-kids" placeholder="0" min="0" max="10" /></div>
+          <div class="form-group"><label>Antall rom</label><input type="number" id="plan-rooms" placeholder="f.eks. 3" min="1" max="20" /></div>
         </div>
         <button class="btn-primary" onclick="calcBoxes()" style="margin-top:4px">🧮 Beregn esker</button>
       </div>
-
       <div id="planner-result" style="display:none">
         <div class="planner-result">
           <h3>📦 Estimert behov</h3>
@@ -361,19 +293,11 @@
     <div class="app">
       <div class="section-title">Adresser</div>
       <div class="card">
-        <div class="form-group full" style="margin-bottom:12px">
-          <label>Fra-adresse</label>
-          <input type="text" id="tr-from" placeholder="f.eks. Kongens gate 5, Oslo" />
-        </div>
-        <div class="form-group full" style="margin-bottom:16px">
-          <label>Til-adresse</label>
-          <input type="text" id="tr-to" placeholder="f.eks. Storgata 12, Bergen" />
-        </div>
-
+        <div class="form-group full" style="margin-bottom:12px"><label>Fra-adresse</label><input type="text" id="tr-from" placeholder="f.eks. Kongens gate 5, Oslo" /></div>
+        <div class="form-group full" style="margin-bottom:16px"><label>Til-adresse</label><input type="text" id="tr-to" placeholder="f.eks. Storgata 12, Bergen" /></div>
         <div class="section-title" style="margin-top:4px">Kjøretøy</div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Type kjøretøy</label>
+          <div class="form-group"><label>Type kjøretøy</label>
             <select id="tr-vehicle" onchange="updateVehicleDefaults()">
               <option value="personbil">Personbil</option>
               <option value="stasjonsvogn">Stasjonsvogn / SUV</option>
@@ -390,28 +314,62 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Antall esker du har</label>
-            <input type="number" id="tr-boxcount" placeholder="Hentes fra esker-fanen" min="1" />
-            <span class="hint">Fylles automatisk fra esker-fanen</span>
-          </div>
-          <div class="form-group">
-            <label>Kjørehastighet snitt</label>
+          <div class="form-group"><label>Antall esker</label><input type="number" id="tr-boxcount" placeholder="Fra esker-fanen" min="1" /><span class="hint">Fylles fra esker-fanen</span></div>
+          <div class="form-group"><label>Kjørehastighet snitt</label>
             <select id="tr-speed">
               <option value="80">Landevei (~80 km/t)</option>
               <option value="60">Blandet (~60 km/t)</option>
               <option value="40">By (~40 km/t)</option>
             </select>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Stopp per tur (min)</label>
-            <input type="number" id="tr-stop" value="30" min="0" max="120" />
-            <span class="hint">Lasting/lossing per tur</span>
-          </div>
+          <div class="form-group"><label>Stopp per tur (min)</label><input type="number" id="tr-stop" value="30" min="0" max="120" /><span class="hint">Lasting/lossing</span></div>
         </div>
         <button class="btn-primary" onclick="calcTransport()" style="margin-top:8px">🚗 Beregn transport</button>
+      </div>
+
+      <!-- FURNITURE SECTION -->
+      <div class="section-title" style="margin-top:24px">Store møbler</div>
+      <div class="card">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px">Legg til møbler som skal flyttes. Volumet inkluderes automatisk i transportberegningen.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="furn-cat" onchange="updateFurnSubcat()">
+              <option value="">Velg kategori…</option>
+              <option value="sofa">🛋 Sofaer</option>
+              <option value="seng">🛏 Senger</option>
+              <option value="skap">🪞 Skap og kommoder</option>
+              <option value="bord">🪑 Bord</option>
+              <option value="stol">💺 Stoler og lenestoler</option>
+              <option value="hylle">📚 Hyller og bokhyller</option>
+              <option value="kjokken">🍳 Kjøkkenmøbler</option>
+              <option value="kontor">🖥 Kontormøbler</option>
+              <option value="barn">🧸 Barnemøbler</option>
+              <option value="sport">🏋 Sportsutstyr</option>
+              <option value="annet">📦 Annet / stort</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <select id="furn-subcat"><option value="">Velg kategori først</option></select>
+          </div>
+          <div class="form-group" style="max-width:90px; flex: 0 0 90px;">
+            <label>Antall</label>
+            <input type="number" id="furn-qty" value="1" min="1" max="20" style="text-align:center" />
+          </div>
+          <div style="display:flex;align-items:flex-end;padding-bottom:1px">
+            <button class="btn-primary" onclick="addFurniture()" style="padding:10px 16px">+ Legg til</button>
+          </div>
+        </div>
+
+        <div id="furn-list" style="margin-top:14px;display:none">
+          <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:8px">Registrerte møbler</div>
+          <div id="furn-items"></div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:0.82rem;color:var(--muted)">Totalt møbelvolum:</span>
+            <strong style="font-size:1rem;color:var(--accent)" id="furn-total-vol">0 m³</strong>
+          </div>
+        </div>
       </div>
 
       <div id="transport-result" style="display:none">
@@ -449,18 +407,154 @@
 </div>
 
 <script>
+// ===== FURNITURE DATABASE =====
+// vol_m3 = approximate volume including clearance for handling
+const FURNITURE = {
+  sofa: [
+    { name: 'To-seter sofa',          vol: 0.9 },
+    { name: 'Tre-seter sofa',          vol: 1.3 },
+    { name: 'Fire-seter sofa',         vol: 1.7 },
+    { name: 'L-sofa (liten)',          vol: 1.8 },
+    { name: 'L-sofa (stor)',           vol: 2.5 },
+    { name: 'Sjeselong / chaise longue', vol: 1.1 },
+    { name: 'Hjørnesofa (stor)',       vol: 3.0 },
+    { name: 'Sofa med sovemulig',      vol: 1.6 },
+    { name: 'Futon',                   vol: 0.7 },
+  ],
+  seng: [
+    { name: 'Enkeltseng 80 cm',        vol: 0.7 },
+    { name: 'Enkeltseng 90 cm',        vol: 0.8 },
+    { name: 'Dobbeltseng 120 cm',      vol: 1.0 },
+    { name: 'Queensize 160 cm',        vol: 1.3 },
+    { name: 'Kingsize 180 cm',         vol: 1.5 },
+    { name: 'Seng med oppbevaring',    vol: 1.8 },
+    { name: 'Heviseng / loftsseng',    vol: 1.4 },
+    { name: 'Madrass (enkelt)',        vol: 0.5 },
+    { name: 'Madrass (dobbel)',        vol: 0.9 },
+    { name: 'Barneseng/spjelseng',     vol: 0.6 },
+    { name: 'Juniorbed',               vol: 0.7 },
+  ],
+  skap: [
+    { name: 'Lite klesskap (1 dør)',   vol: 0.6 },
+    { name: 'Klesskap (2 dører)',      vol: 1.1 },
+    { name: 'Klesskap (3 dører)',      vol: 1.6 },
+    { name: 'Garderobeskap (stort)',   vol: 2.2 },
+    { name: 'Walk-in garderobe enhet', vol: 1.8 },
+    { name: 'Kommode (liten)',         vol: 0.4 },
+    { name: 'Kommode (stor)',          vol: 0.7 },
+    { name: 'Sideboard / buffet',      vol: 0.8 },
+    { name: 'Vitrineskap',             vol: 0.9 },
+    { name: 'Skoskap',                 vol: 0.5 },
+    { name: 'Nattbord',                vol: 0.2 },
+  ],
+  bord: [
+    { name: 'Lite sofabord',           vol: 0.2 },
+    { name: 'Stort sofabord',          vol: 0.4 },
+    { name: 'Spisebord (2–4 pers)',    vol: 0.7 },
+    { name: 'Spisebord (4–6 pers)',    vol: 1.1 },
+    { name: 'Spisebord (6–8 pers)',    vol: 1.6 },
+    { name: 'Kjøkkenbord (lite)',      vol: 0.4 },
+    { name: 'Sidebord / konsollbord',  vol: 0.3 },
+    { name: 'TV-benk (liten)',         vol: 0.4 },
+    { name: 'TV-benk (stor)',          vol: 0.7 },
+  ],
+  stol: [
+    { name: 'Spisestol (per stk)',     vol: 0.2 },
+    { name: 'Barkrakk (per stk)',      vol: 0.2 },
+    { name: 'Lenestol (liten)',        vol: 0.5 },
+    { name: 'Lenestol (stor)',         vol: 0.8 },
+    { name: 'Hvilestol / recliner',    vol: 1.0 },
+    { name: 'Puff / Ottoman',          vol: 0.3 },
+    { name: 'Gyngestol',               vol: 0.7 },
+    { name: 'Kontorsjef-stol',         vol: 0.5 },
+  ],
+  hylle: [
+    { name: 'Liten vegghy lIe',        vol: 0.2 },
+    { name: 'Bokhylle (smal, høy)',    vol: 0.5 },
+    { name: 'Bokhylle (bred, høy)',    vol: 1.0 },
+    { name: 'Kallax / kubehy lIe',     vol: 0.6 },
+    { name: 'Billy type (standard)',   vol: 0.5 },
+    { name: 'Tv-møbel med hyller',     vol: 0.9 },
+    { name: 'Entréhy lIe med krok',    vol: 0.4 },
+  ],
+  kjokken: [
+    { name: 'Kjøleskap (standard)',    vol: 0.7 },
+    { name: 'Kjøleskap (stor/XL)',     vol: 1.1 },
+    { name: 'Kombinert kjøl/frys',     vol: 0.9 },
+    { name: 'Frittstående fryser',     vol: 0.5 },
+    { name: 'Oppvaskmaskin',           vol: 0.5 },
+    { name: 'Vaskemaskin',             vol: 0.5 },
+    { name: 'Tørketrommel',            vol: 0.5 },
+    { name: 'Kombinert vask/tørk',     vol: 0.6 },
+    { name: 'Kjøkkenvogn / tralle',    vol: 0.4 },
+    { name: 'Mikrobølgeovn frittstående', vol: 0.2 },
+  ],
+  kontor: [
+    { name: 'Lite skrivebord',         vol: 0.5 },
+    { name: 'Stort skrivebord (120+ cm)', vol: 0.9 },
+    { name: 'Heve-/senkebord',         vol: 1.0 },
+    { name: 'Hjørnesk rivebord',       vol: 1.4 },
+    { name: 'Arkivskap (2 skuffer)',   vol: 0.4 },
+    { name: 'Arkivskap (4 skuffer)',   vol: 0.7 },
+    { name: 'Bokhylle (kontor)',       vol: 0.6 },
+    { name: 'Monitor (stor)',          vol: 0.2 },
+    { name: 'Printer (stor)',          vol: 0.2 },
+  ],
+  barn: [
+    { name: 'Barneseng/sprinseng',     vol: 0.6 },
+    { name: 'Barnesykkel',             vol: 0.4 },
+    { name: 'Lekekjøkken',             vol: 0.5 },
+    { name: 'Lekekasse (stor)',        vol: 0.4 },
+    { name: 'Barnesekresjon (lite)',   vol: 0.4 },
+    { name: 'Stellebord',              vol: 0.5 },
+    { name: 'Barnevogn',               vol: 0.6 },
+    { name: 'Sparkesykkel / løpesykkel', vol: 0.3 },
+    { name: 'Trampoline (sammenfoldet)', vol: 0.8 },
+    { name: 'Klatrestativ (innendørs)', vol: 0.7 },
+  ],
+  sport: [
+    { name: 'Treningssykkel',          vol: 0.8 },
+    { name: 'Romaskjin',               vol: 1.0 },
+    { name: 'Tredemølle',              vol: 1.1 },
+    { name: 'Vektsett med stativ',     vol: 0.8 },
+    { name: 'Vektbenkk',               vol: 0.7 },
+    { name: 'Sykkel (voksen)',         vol: 0.8 },
+    { name: 'Ski + staver (par)',      vol: 0.4 },
+    { name: 'Kajakk / kano',           vol: 2.0 },
+    { name: 'Surfebrett / ski',        vol: 0.5 },
+  ],
+  annet: [
+    { name: 'Piano (oppreist)',        vol: 2.5 },
+    { name: 'Flygel',                  vol: 5.0 },
+    { name: 'Safe (medium)',           vol: 0.3 },
+    { name: 'Akvarium (200L+)',        vol: 0.8 },
+    { name: 'Peis / ovn (fri stående)', vol: 0.6 },
+    { name: 'Stor plante / tre',       vol: 0.4 },
+    { name: 'Skulptur / kunstverk (stort)', vol: 0.5 },
+    { name: 'Annen stor gjenstand',    vol: 0.5 },
+  ],
+};
+
 // ===== STATE =====
-const STORAGE_KEY = 'flytteesker_v2';
+const STORAGE_KEY = 'flytteesker_v3';
 let boxes = [];
+let furniture = []; // { id, cat, name, vol, qty }
 let currentQrBox = null;
 let currentTab = 'esker';
 let fromAddr = '', toAddr = '';
 
 // ===== PERSISTENCE =====
 function load() {
-  try { const r = localStorage.getItem(STORAGE_KEY); boxes = r ? JSON.parse(r) : []; } catch { boxes = []; }
+  try {
+    const r = localStorage.getItem(STORAGE_KEY);
+    const data = r ? JSON.parse(r) : {};
+    boxes = data.boxes || [];
+    furniture = data.furniture || [];
+  } catch { boxes = []; furniture = []; }
 }
-function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(boxes)); }
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ boxes, furniture }));
+}
 function generateId() { return Math.random().toString(36).slice(2, 9); }
 
 // ===== TABS =====
@@ -470,9 +564,8 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('content-' + tab).classList.add('active');
   document.getElementById('tab-' + tab).classList.add('active');
-  if (tab === 'transport') syncBoxCount();
+  if (tab === 'transport') { syncBoxCount(); renderFurniture(); }
 }
-
 function syncBoxCount() {
   const el = document.getElementById('tr-boxcount');
   if (el && !el.value && boxes.length > 0) el.placeholder = boxes.length + ' (fra esker-fanen)';
@@ -485,18 +578,16 @@ function checkScanMode() {
   if (!data) return false;
   try {
     const box = JSON.parse(atob(data));
-    showScanView(box);
-    return true;
+    showScanView(box); return true;
   } catch { return false; }
 }
-
 function showScanView(box) {
   document.getElementById('scan-view').style.display = 'block';
   document.getElementById('main-view').style.display = 'none';
   document.getElementById('tab-bar').style.display = 'none';
   document.getElementById('sv-name').textContent = box.name;
   document.getElementById('sv-room').textContent = box.room || 'Rom ikke angitt';
-  const pMap = { high: ['🔴 Pakkes opp først', 'priority-high'], medium: ['🟡 Middels prioritet', 'priority-medium'], low: ['🟢 Pakkes opp sist', 'priority-low'] };
+  const pMap = { high:['🔴 Pakkes opp først','priority-high'], medium:['🟡 Middels prioritet','priority-medium'], low:['🟢 Pakkes opp sist','priority-low'] };
   const [label, cls] = pMap[box.priority] || pMap.low;
   const pel = document.getElementById('sv-priority');
   pel.textContent = label; pel.className = 'priority-badge ' + cls;
@@ -505,15 +596,13 @@ function showScanView(box) {
   (box.items || []).forEach(item => { const li = document.createElement('li'); li.textContent = item; ul.appendChild(li); });
   document.getElementById('sv-notes').textContent = box.notes ? '📝 ' + box.notes : '';
 }
-
 function goHome() { window.location.href = window.location.pathname; }
 
 // ===== BOXES =====
 function makeBoxUrl(box) {
-  const encoded = btoa(JSON.stringify({ name: box.name, room: box.room, priority: box.priority, items: box.items, notes: box.notes }));
+  const encoded = btoa(JSON.stringify({ name:box.name, room:box.room, priority:box.priority, items:box.items, notes:box.notes }));
   return window.location.origin + window.location.pathname + '?box=' + encodeURIComponent(encoded);
 }
-
 function addBox() {
   const name = document.getElementById('box-name').value.trim();
   if (!name) { alert('Gi eskeen et navn.'); return; }
@@ -529,13 +618,11 @@ function addBox() {
   document.getElementById('box-items').value = '';
   document.getElementById('box-notes').value = '';
 }
-
 function deleteBox(id) {
   if (!confirm('Slett denne eskeen?')) return;
   boxes = boxes.filter(b => b.id !== id);
   save(); renderBoxes();
 }
-
 function showQr(id) {
   const box = boxes.find(b => b.id === id);
   if (!box) return;
@@ -546,26 +633,23 @@ function showQr(id) {
   document.getElementById('qr-url-display').textContent = url;
   const container = document.getElementById('qr-container');
   container.innerHTML = '';
-  new QRCode(container, { text: url, width: 210, height: 210, colorDark: '#2d5a3d', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  new QRCode(container, { text:url, width:210, height:210, colorDark:'#2d5a3d', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M });
   document.getElementById('qr-modal').classList.add('open');
 }
-
 function closeModal() { document.getElementById('qr-modal').classList.remove('open'); currentQrBox = null; }
-
 function printLabel() {
   if (!currentQrBox) return;
   const box = currentQrBox;
   const url = makeBoxUrl(box);
   document.getElementById('print-title').textContent = box.name;
   document.getElementById('print-room').textContent = box.room || '';
-  document.getElementById('print-items').textContent = (box.items || []).slice(0, 6).join(' · ') + (box.items.length > 6 ? ' …' : '');
+  document.getElementById('print-items').textContent = (box.items||[]).slice(0,6).join(' · ') + (box.items.length > 6 ? ' …' : '');
   const printQrEl = document.getElementById('print-qr');
   printQrEl.innerHTML = '';
-  new QRCode(printQrEl, { text: url, width: 200, height: 200, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+  new QRCode(printQrEl, { text:url, width:200, height:200, colorDark:'#000000', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M });
   document.getElementById('print-area').style.display = 'flex';
   setTimeout(() => { window.print(); document.getElementById('print-area').style.display = 'none'; }, 300);
 }
-
 function renderBoxes() {
   const grid = document.getElementById('boxes-grid');
   const cnt = document.getElementById('box-count');
@@ -574,9 +658,9 @@ function renderBoxes() {
     grid.innerHTML = '<div class="empty-state"><div class="icon">🗃️</div><p>Ingen esker ennå.<br>Legg til den første ovenfor.</p></div>';
     return;
   }
-  const pLabel = { high: '🔴', medium: '🟡', low: '🟢' };
+  const pLabel = { high:'🔴', medium:'🟡', low:'🟢' };
   grid.innerHTML = boxes.map(box => {
-    const preview = box.items.slice(0, 3).join(', ') + (box.items.length > 3 ? ` +${box.items.length - 3} til` : '');
+    const preview = box.items.slice(0,3).join(', ') + (box.items.length > 3 ? ` +${box.items.length-3} til` : '');
     return `<div class="box-card">
       <div class="box-card-header">
         <h3>${pLabel[box.priority]||''} ${escHtml(box.name)}</h3>
@@ -591,37 +675,85 @@ function renderBoxes() {
   }).join('');
 }
 
-// ===== BOX PLANNER =====
-// Boxes per m² by type (average cardboard moving box ≈ 0.06 m³)
-const typeMultiplier = { hybel: 0.8, studio: 0.85, leilighet: 1.0, rekkehus: 1.15, enebolig: 1.25 };
+// ===== FURNITURE =====
+function updateFurnSubcat() {
+  const cat = document.getElementById('furn-cat').value;
+  const sub = document.getElementById('furn-subcat');
+  sub.innerHTML = '';
+  if (!cat || !FURNITURE[cat]) {
+    sub.innerHTML = '<option value="">Velg kategori først</option>';
+    return;
+  }
+  FURNITURE[cat].forEach((item, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${item.name} (~${item.vol} m³)`;
+    sub.appendChild(opt);
+  });
+}
 
+function addFurniture() {
+  const cat = document.getElementById('furn-cat').value;
+  const subIdx = document.getElementById('furn-subcat').value;
+  const qty = parseInt(document.getElementById('furn-qty').value) || 1;
+  if (!cat || subIdx === '' || subIdx === undefined) { alert('Velg kategori og type møbel.'); return; }
+  const item = FURNITURE[cat][parseInt(subIdx)];
+  if (!item) return;
+  furniture.push({ id: generateId(), cat, name: item.name, vol: item.vol, qty });
+  save();
+  renderFurniture();
+  document.getElementById('furn-qty').value = 1;
+}
+
+function deleteFurniture(id) {
+  furniture = furniture.filter(f => f.id !== id);
+  save();
+  renderFurniture();
+}
+
+function getFurnitureVolume() {
+  return furniture.reduce((sum, f) => sum + f.vol * f.qty, 0);
+}
+
+function renderFurniture() {
+  const listEl = document.getElementById('furn-list');
+  const itemsEl = document.getElementById('furn-items');
+  const totalEl = document.getElementById('furn-total-vol');
+  if (!furniture.length) { listEl.style.display = 'none'; return; }
+  listEl.style.display = 'block';
+  const totalVol = getFurnitureVolume();
+  totalEl.textContent = Math.round(totalVol * 10) / 10 + ' m³';
+  itemsEl.innerHTML = furniture.map(f => {
+    const lineVol = Math.round(f.vol * f.qty * 10) / 10;
+    return `<div class="furn-item-row">
+      <span class="furn-name">${f.qty > 1 ? f.qty + '× ' : ''}${escHtml(f.name)}</span>
+      <span class="furn-vol">${lineVol} m³</span>
+      <button class="furn-del" onclick="deleteFurniture('${f.id}')" title="Fjern">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ===== BOX PLANNER =====
+const typeMultiplier = { hybel:0.8, studio:0.85, leilighet:1.0, rekkehus:1.15, enebolig:1.25 };
 function calcBoxes() {
   const type = document.getElementById('plan-type').value;
   const sqm = parseFloat(document.getElementById('plan-sqm').value) || 0;
   const adults = parseInt(document.getElementById('plan-adults').value) || 1;
   const kids = parseInt(document.getElementById('plan-kids').value) || 0;
-  const rooms = parseInt(document.getElementById('plan-rooms').value) || Math.max(1, Math.round(sqm / 20));
-
+  const rooms = parseInt(document.getElementById('plan-rooms').value) || Math.max(1, Math.round(sqm/20));
   if (sqm < 10) { alert('Skriv inn størrelse på boligen.'); return; }
-
-  // Base: ~0.55 esker per m² for standard leilighet
   const base = sqm * 0.55 * (typeMultiplier[type] || 1.0);
-  // Add for people
   const personAdd = adults * 8 + kids * 4;
-  // Add for rooms (kitchen/bathroom extra stuff)
   const roomAdd = rooms * 3;
-
   const total = Math.round(base + personAdd + roomAdd);
-  const large = Math.round(total * 0.25);  // store: tøy, sengetøy, puter
-  const medium = Math.round(total * 0.45); // mellom: kjøkken, bøker
-  const small = total - large - medium;    // små: skjøre ting, elektronikk
-
+  const large = Math.round(total * 0.25);
+  const medium = Math.round(total * 0.45);
+  const small = total - large - medium;
   document.getElementById('res-boxes').textContent = total;
   document.getElementById('res-small').textContent = small;
   document.getElementById('res-medium').textContent = medium;
   document.getElementById('res-large').textContent = large;
-
-  let notes = `📐 Basert på ${sqm} m² ${type} med ${adults + kids} person${adults+kids!==1?'er':''} og ${rooms} rom.\n`;
+  let notes = `📐 Basert på ${sqm} m² ${type} med ${adults+kids} person${adults+kids!==1?'er':''} og ${rooms} rom.\n`;
   notes += `💡 Kjøp gjerne 10–15% ekstra – det er alltid mer enn man tror.`;
   document.getElementById('res-notes').textContent = notes;
   document.getElementById('planner-result').style.display = 'block';
@@ -629,17 +761,14 @@ function calcBoxes() {
 
 // ===== TRANSPORT =====
 const vehicleDefaults = {
-  personbil:     { vol: 0.4,  label: 'ca. 0,4 m³' },
-  stasjonsvogn:  { vol: 0.9,  label: 'ca. 0,9 m³' },
-  varebil_liten: { vol: 5,    label: 'ca. 5 m³' },
-  varebil_stor:  { vol: 12,   label: 'ca. 12 m³' },
-  lastebil:      { vol: 30,   label: 'ca. 30 m³' },
-  tilhenger:     { vol: 2.5,  label: 'ca. 2,5 m³' },
+  personbil:     { vol:0.4,  label:'ca. 0,4 m³' },
+  stasjonsvogn:  { vol:0.9,  label:'ca. 0,9 m³' },
+  varebil_liten: { vol:5,    label:'ca. 5 m³' },
+  varebil_stor:  { vol:12,   label:'ca. 12 m³' },
+  lastebil:      { vol:30,   label:'ca. 30 m³' },
+  tilhenger:     { vol:2.5,  label:'ca. 2,5 m³' },
 };
-
-// Average moving box volume ≈ 0.05 m³ (standard 60L eske)
 const BOX_VOL_M3 = 0.05;
-// Packing efficiency (boxes + furniture gaps)
 const PACK_EFF = 0.65;
 
 function updateVehicleDefaults() {
@@ -651,6 +780,9 @@ function updateVehicleDefaults() {
 async function calcTransport() {
   const from = document.getElementById('tr-from').value.trim();
   const to = document.getElementById('tr-to').value.trim();
+  if (!from || !to) { alert('Fyll inn begge adresser.'); return; }
+  fromAddr = from; toAddr = to;
+
   const vehicle = document.getElementById('tr-vehicle').value;
   const volInput = parseFloat(document.getElementById('tr-volume').value);
   const vol = volInput || vehicleDefaults[vehicle]?.vol || 5;
@@ -659,32 +791,18 @@ async function calcTransport() {
   const speed = parseInt(document.getElementById('tr-speed').value) || 80;
   const stopMin = parseInt(document.getElementById('tr-stop').value) || 30;
 
-  if (!from || !to) { alert('Fyll inn begge adresser.'); return; }
+  const distKm = estimateDistance(from, to);
 
-  fromAddr = from; toAddr = to;
-
-  // Try to get distance via Google Maps API (open route)
-  let distKm = null;
-  try {
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(from)}&destinations=${encodeURIComponent(to)}&mode=driving&language=no`;
-    // Falls back gracefully – we'll use straight-line estimate
-  } catch {}
-
-  // Estimate distance from addresses if no API
-  // Use a simple geocode-free heuristic: parse for known Norwegian city pairs
-  distKm = estimateDistance(from, to);
-
-  // Volume calc: each box 0.05 m³, plus ~40% for furniture/misc
-  const totalVol = boxCount * BOX_VOL_M3 / PACK_EFF;
+  // Total volume = boxes + furniture
+  const boxVol = boxCount * BOX_VOL_M3;
+  const furnVol = getFurnitureVolume();
+  const totalVol = (boxVol + furnVol) / PACK_EFF;
   const usableVol = vol * PACK_EFF;
   const trips = Math.ceil(totalVol / usableVol);
   const boxesPerTrip = Math.ceil(boxCount / trips);
 
-  // Time: drive each way + stops
   const driveMinutes = (distKm / speed) * 60;
-  // First trip: one way load + return. Last trip: one way only.
-  // Simplified: trips * (one-way drive + stop) + return drives (trips-1)
-  const totalMinutes = trips * (driveMinutes + stopMin) + (trips - 1) * driveMinutes;
+  const totalMinutes = trips * (driveMinutes + stopMin) + (trips-1) * driveMinutes;
   const hours = Math.floor(totalMinutes / 60);
   const mins = Math.round(totalMinutes % 60);
 
@@ -696,62 +814,51 @@ async function calcTransport() {
   const vName = { personbil:'Personbil', stasjonsvogn:'Stasjonsvogn/SUV', varebil_liten:'Liten varebil', varebil_stor:'Stor varebil', lastebil:'Lastebil', tilhenger:'Bil m/ tilhenger' }[vehicle] || vehicle;
 
   let detail = `<b>${vName}</b> med ${vol} m³ lasterom.<br>`;
-  detail += `Totalt volum å flytte: ca. <span>${Math.round(totalVol * 10)/10} m³</span> (esker + møbler/diverse).<br>`;
-  detail += `Kjørelengde én vei: ca. <span>${distKm < 5 ? Math.round(distKm*1000)+' m' : Math.round(distKm)+' km'}</span> – reisetid ca. <span>${Math.round(driveMinutes)} min</span>.<br>`;
-  detail += `Stopp per tur (lasting/lossing): <span>${stopMin} min</span>.`;
+  detail += `Esker: <span>${boxVol.toFixed(1)} m³</span>`;
+  if (furnVol > 0) detail += ` · Møbler: <span>${furnVol.toFixed(1)} m³</span>`;
+  detail += ` · Totalt (inkl. luft): <span>${Math.round(totalVol*10)/10} m³</span>.<br>`;
+  detail += `Kjørelengde én vei: ca. <span>${distKm < 5 ? Math.round(distKm*1000)+' m' : Math.round(distKm)+' km'}</span> – ca. <span>${Math.round(driveMinutes)} min</span>.<br>`;
+  detail += `Stopp per tur: <span>${stopMin} min</span>.`;
   if (distKm > 200) detail += `<br>💡 Lang strekning – vurder overnatting mellom turene.`;
   if (trips > 3) detail += `<br>💡 Mange turer – vurder å leie en større bil.`;
+  if (furnVol > vol * 0.5) detail += `<br>⚠️ Store møbler utgjør mye av volumet – sjekk at alt får plass.`;
 
   document.getElementById('tr-res-detail').innerHTML = detail;
   document.getElementById('transport-result').style.display = 'block';
 }
 
 function estimateDistance(from, to) {
-  // Very simple city-based lookup for common Norwegian routes
   const cities = {
-    oslo: [59.91, 10.75], bergen: [60.39, 5.32], stavanger: [58.97, 5.73],
-    trondheim: [63.43, 10.39], tromsø: [69.65, 18.96], kristiansand: [58.14, 7.99],
-    drammen: [59.74, 10.20], fredrikstad: [59.22, 10.93], sandnes: [58.85, 5.73],
-    bodø: [67.28, 14.37], ålesund: [62.47, 6.15], tønsberg: [59.27, 10.40],
-    porsgrunn: [59.14, 9.65], skien: [59.20, 9.60], hamar: [60.79, 11.07],
-    lillehammer: [61.11, 10.47], sarpsborg: [59.28, 11.11], halden: [59.12, 11.38],
-    moss: [59.43, 10.66], arendal: [58.46, 8.77], grimstad: [58.34, 8.59],
+    oslo:[59.91,10.75], bergen:[60.39,5.32], stavanger:[58.97,5.73],
+    trondheim:[63.43,10.39], tromsø:[69.65,18.96], kristiansand:[58.14,7.99],
+    drammen:[59.74,10.20], fredrikstad:[59.22,10.93], sandnes:[58.85,5.73],
+    bodø:[67.28,14.37], ålesund:[62.47,6.15], tønsberg:[59.27,10.40],
+    porsgrunn:[59.14,9.65], skien:[59.20,9.60], hamar:[60.79,11.07],
+    lillehammer:[61.11,10.47], sarpsborg:[59.28,11.11], halden:[59.12,11.38],
+    moss:[59.43,10.66], arendal:[58.46,8.77], grimstad:[58.34,8.59],
+    larvik:[59.05,10.03], sandefjord:[59.13,10.22], horten:[59.41,10.49],
   };
-
   function findCity(addr) {
     const low = addr.toLowerCase();
-    for (const [name, coords] of Object.entries(cities)) {
-      if (low.includes(name)) return coords;
-    }
+    for (const [name, coords] of Object.entries(cities)) { if (low.includes(name)) return coords; }
     return null;
   }
-
-  const c1 = findCity(from);
-  const c2 = findCity(to);
-
+  const c1 = findCity(from), c2 = findCity(to);
   if (c1 && c2) {
-    // Haversine
     const R = 6371;
-    const dLat = (c2[0]-c1[0]) * Math.PI/180;
-    const dLon = (c2[1]-c1[1]) * Math.PI/180;
+    const dLat = (c2[0]-c1[0])*Math.PI/180, dLon = (c2[1]-c1[1])*Math.PI/180;
     const a = Math.sin(dLat/2)**2 + Math.cos(c1[0]*Math.PI/180)*Math.cos(c2[0]*Math.PI/180)*Math.sin(dLon/2)**2;
-    const crow = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return crow * 1.35; // road factor
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)) * 1.35;
   }
-
-  // Same area fallback
-  const sameAreaWords = ['gate', 'vei', 'veg', 'plass', 'allé'];
   const fromCity = from.split(',').slice(-1)[0]?.trim().toLowerCase();
   const toCity = to.split(',').slice(-1)[0]?.trim().toLowerCase();
-  if (fromCity && toCity && fromCity === toCity) return 3 + Math.random() * 5;
-
-  return 15; // default fallback
+  if (fromCity && toCity && fromCity === toCity) return 3 + Math.random()*5;
+  return 15;
 }
 
 function openMaps() {
   if (!fromAddr || !toAddr) return;
-  const url = `https://www.google.com/maps/dir/${encodeURIComponent(fromAddr)}/${encodeURIComponent(toAddr)}`;
-  window.open(url, '_blank');
+  window.open(`https://www.google.com/maps/dir/${encodeURIComponent(fromAddr)}/${encodeURIComponent(toAddr)}`, '_blank');
 }
 
 // ===== UTILS =====
@@ -762,12 +869,8 @@ function escHtml(str) {
 // ===== INIT =====
 load();
 updateVehicleDefaults();
-if (!checkScanMode()) {
-  renderBoxes();
-}
-document.getElementById('qr-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+if (!checkScanMode()) { renderBoxes(); }
+document.getElementById('qr-modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 </script>
 </body>
 </html>
