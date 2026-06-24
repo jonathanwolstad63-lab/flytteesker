@@ -152,6 +152,35 @@
     .modal-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .btn-print { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
     .btn-close { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
+    /* ===== MOBILE FIRST ===== */
+    @media (max-width: 600px) {
+      .app { padding: 14px 12px; }
+      .card { padding: 16px 14px; }
+
+      /* All form rows stack vertically on mobile */
+      .form-row { flex-direction: column; gap: 12px; margin-bottom: 14px; }
+      .form-group { min-width: 100%; flex: 1 1 100%; }
+
+      /* Furniture add row: stack cat, subcat, qty then button */
+      .furn-add-row { flex-direction: column; gap: 10px; }
+      .furn-qty-group { max-width: 100% !important; flex: 1 1 100% !important; }
+      .furn-btn-wrap { width: 100%; }
+      .furn-btn-wrap .btn-primary { width: 100%; justify-content: center; }
+
+      /* Full-width buttons */
+      .btn-primary { width: 100%; justify-content: center; }
+
+      /* Box grid single column */
+      .boxes-grid { grid-template-columns: 1fr; }
+
+      /* Result grids stay 2-col (they're compact numbers, fine on mobile) */
+      .result-grid { grid-template-columns: 1fr 1fr; }
+      .trip-grid   { grid-template-columns: 1fr 1fr; }
+
+      /* Section titles */
+      .section-title { margin-top: 20px; }
+    }
+
     @media print {
       body * { display: none !important; }
       .print-area, .print-area * { display: block !important; }
@@ -331,7 +360,7 @@
       <div class="section-title" style="margin-top:24px">Store møbler</div>
       <div class="card">
         <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px">Legg til møbler som skal flyttes. Volumet inkluderes automatisk i transportberegningen.</p>
-        <div class="form-row">
+        <div class="form-row furn-add-row">
           <div class="form-group">
             <label>Kategori</label>
             <select id="furn-cat" onchange="updateFurnSubcat()">
@@ -353,11 +382,11 @@
             <label>Type</label>
             <select id="furn-subcat"><option value="">Velg kategori først</option></select>
           </div>
-          <div class="form-group" style="max-width:90px; flex: 0 0 90px;">
+          <div class="form-group furn-qty-group" style="max-width:90px; flex: 0 0 90px;">
             <label>Antall</label>
             <input type="number" id="furn-qty" value="1" min="1" max="20" style="text-align:center" />
           </div>
-          <div style="display:flex;align-items:flex-end;padding-bottom:1px">
+          <div class="furn-btn-wrap" style="display:flex;align-items:flex-end;padding-bottom:1px">
             <button class="btn-primary" onclick="addFurniture()" style="padding:10px 16px">+ Legg til</button>
           </div>
         </div>
