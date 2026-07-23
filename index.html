@@ -116,6 +116,8 @@
     .btn-qr { flex: 1; background: var(--accent); color: white; border: none; padding: 8px 10px; border-radius: 7px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
     .btn-delete { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 8px 10px; border-radius: 7px; font-size: 0.8rem; cursor: pointer; }
     .btn-delete:hover { border-color: var(--danger); color: var(--danger); }
+    .btn-edit { background: none; border: 1.5px solid var(--border); color: var(--muted); padding: 8px 10px; border-radius: 7px; font-size: 0.8rem; cursor: pointer; }
+    .btn-edit:hover { border-color: var(--accent); color: var(--accent); }
     .empty-state { text-align: center; padding: 36px 20px; color: var(--muted); border: 2px dashed var(--border); border-radius: var(--radius); }
     .empty-state .icon { font-size: 2.2rem; margin-bottom: 10px; }
     .empty-state p { font-size: 0.87rem; }
@@ -182,14 +184,24 @@
     }
 
     @media print {
+      @page { size: A5 portrait; margin: 0; }
       body * { display: none !important; }
-      .print-area, .print-area * { display: block !important; }
-      .print-area { position: fixed; inset: 0; display: flex !important; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; padding: 20px; }
-      .print-area .print-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
-      .print-area .print-room { font-size: 1rem; color: #555; margin-bottom: 14px; }
-      .print-area .print-items { font-size: 0.88rem; color: #333; margin-bottom: 18px; text-align: center; max-width: 280px; }
-      .print-area canvas, .print-area img { width: 200px; height: 200px; }
-      .print-area .print-hint { font-size: 0.72rem; color: #888; margin-top: 8px; }
+      .print-area { display: flex !important; }
+      .print-area * { display: block !important; }
+      .print-area {
+        position: fixed; inset: 0;
+        flex-direction: column; align-items: center; justify-content: center;
+        font-family: sans-serif; background: white;
+        padding: 20px; width: 100vw; height: 100vh; box-sizing: border-box;
+      }
+      .print-area .print-logo { font-size: 2rem; margin-bottom: 6px; display: block !important; }
+      .print-area .print-title { font-size: 2rem; font-weight: 800; margin-bottom: 4px; color: #1a1a18; text-align: center; display: block !important; }
+      .print-area .print-room { font-size: 1rem; color: #2d5a3d; font-weight: 600; margin-bottom: 10px; text-align: center; display: block !important; }
+      .print-area .print-items { font-size: 0.85rem; color: #444; margin-bottom: 16px; text-align: center; max-width: 280px; line-height: 1.6; display: block !important; }
+      .print-area #print-qr { margin: 0 auto 0 auto; display: block !important; }
+      .print-area #print-qr canvas, .print-area #print-qr img { width: 200px !important; height: 200px !important; display: block !important; }
+      .print-area .print-hint { font-size: 0.7rem; color: #888; margin-top: 10px; text-align: center; display: block !important; }
+      .print-area .print-divider { width: 200px; height: 2px; background: #2d5a3d; margin: 10px auto; display: block !important; }
     }
     @media (max-width: 520px) {
       .form-row { flex-direction: column; }
@@ -421,6 +433,53 @@
 
 </div><!-- end main-view -->
 
+<!-- Edit Modal -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal" style="max-width:480px;text-align:left">
+    <h2 style="margin-bottom:14px">✏️ Rediger eske</h2>
+    <input type="hidden" id="edit-id" />
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Eskenavn</label>
+      <input type="text" id="edit-name" />
+    </div>
+    <div class="form-row" style="margin-bottom:12px">
+      <div class="form-group">
+        <label>Rom</label>
+        <select id="edit-room">
+          <option value="">Velg rom…</option>
+          <option>Kjøkken</option><option>Stue</option><option>Soverom</option>
+          <option>Bad</option><option>Gang</option><option>Bod</option>
+          <option>Kontor</option><option>Barnerom</option><option>Annet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Prioritet</label>
+        <select id="edit-priority">
+          <option value="low">Lav – pakkes opp sist</option>
+          <option value="medium">Middels</option>
+          <option value="high">Høy – pakkes opp først</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Innhold</label>
+      <textarea id="edit-items" style="min-height:100px"></textarea>
+      <span class="hint">Ett element per linje</span>
+    </div>
+    <div class="form-group" style="margin-bottom:18px">
+      <label>Notater</label>
+      <input type="text" id="edit-notes" />
+    </div>
+    <div style="background:#fff8e6;border:1px solid #f0d080;border-radius:8px;padding:10px 12px;margin-bottom:16px;font-size:0.82rem;color:#7a5c00">
+      💡 QR-koden på esken oppdateres automatisk når du scanner den neste gang – du trenger ikke skrive ut en ny.
+    </div>
+    <div class="modal-actions" style="justify-content:flex-start">
+      <button class="btn-print" onclick="saveEdit()">💾 Lagre endringer</button>
+      <button class="btn-close" onclick="closeEditModal()">Avbryt</button>
+    </div>
+  </div>
+</div>
+
 <!-- QR Modal -->
 <div class="modal-overlay" id="qr-modal">
   <div class="modal">
@@ -430,6 +489,7 @@
     <div class="qr-url" id="qr-url-display"></div>
     <div class="modal-actions">
       <button class="btn-print" onclick="printLabel()">🖨 Skriv ut</button>
+      <button class="btn-print" onclick="downloadQrImage()" style="background:#4a7c5f">⬇ Last ned bilde</button>
       <button class="btn-close" onclick="closeModal()">Lukk</button>
     </div>
   </div>
@@ -698,6 +758,7 @@ function renderBoxes() {
       <div class="items-preview">${preview ? escHtml(preview) : '<em>Ingen innhold registrert</em>'}</div>
       <div class="card-actions">
         <button class="btn-qr" onclick="showQr('${box.id}')">📷 QR-kode</button>
+        <button class="btn-edit" onclick="editBox('${box.id}')">✏️</button>
         <button class="btn-delete" onclick="deleteBox('${box.id}')">🗑</button>
       </div>
     </div>`;
@@ -890,6 +951,100 @@ function openMaps() {
   window.open(`https://www.google.com/maps/dir/${encodeURIComponent(fromAddr)}/${encodeURIComponent(toAddr)}`, '_blank');
 }
 
+// ===== EDIT BOX =====
+function editBox(id) {
+  const box = boxes.find(b => b.id === id);
+  if (!box) return;
+  document.getElementById('edit-id').value = id;
+  document.getElementById('edit-name').value = box.name;
+  document.getElementById('edit-room').value = box.room || '';
+  document.getElementById('edit-priority').value = box.priority || 'low';
+  document.getElementById('edit-items').value = (box.items || []).join('\n');
+  document.getElementById('edit-notes').value = box.notes || '';
+  document.getElementById('edit-modal').classList.add('open');
+}
+function saveEdit() {
+  const id = document.getElementById('edit-id').value;
+  const box = boxes.find(b => b.id === id);
+  if (!box) return;
+  box.name = document.getElementById('edit-name').value.trim() || box.name;
+  box.room = document.getElementById('edit-room').value;
+  box.priority = document.getElementById('edit-priority').value;
+  box.items = document.getElementById('edit-items').value.split('\n').map(s => s.trim()).filter(Boolean);
+  box.notes = document.getElementById('edit-notes').value.trim();
+  save(); renderBoxes();
+  closeEditModal();
+  // If QR modal was open for this box, refresh it
+  if (currentQrBox && currentQrBox.id === id) showQr(id);
+}
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+}
+
+// ===== DOWNLOAD QR AS IMAGE =====
+function downloadQrImage() {
+  if (!currentQrBox) return;
+  // Find the canvas inside qr-container
+  const canvas = document.querySelector('#qr-container canvas');
+  if (!canvas) { alert('QR-koden er ikke klar ennå, prøv igjen.'); return; }
+
+  // Create a larger canvas with label text
+  const pad = 20;
+  const qrSize = canvas.width;
+  const labelCanvas = document.createElement('canvas');
+  labelCanvas.width = qrSize + pad * 2;
+  labelCanvas.height = qrSize + 110;
+  const ctx = labelCanvas.getContext('2d');
+
+  // White background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, labelCanvas.width, labelCanvas.height);
+
+  // Green top bar
+  ctx.fillStyle = '#2d5a3d';
+  ctx.fillRect(0, 0, labelCanvas.width, 44);
+
+  // Box name in white
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 18px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(currentQrBox.name, labelCanvas.width / 2, 28);
+
+  // Room tag
+  if (currentQrBox.room) {
+    ctx.font = '12px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.fillText(currentQrBox.room, labelCanvas.width / 2, 42);
+  }
+
+  // QR code
+  ctx.drawImage(canvas, pad, 50, qrSize, qrSize);
+
+  // Hint text
+  ctx.fillStyle = '#888';
+  ctx.font = '11px sans-serif';
+  ctx.fillText('Scan QR-kode for innhold', labelCanvas.width / 2, qrSize + 72);
+
+  // Items preview
+  const preview = (currentQrBox.items || []).slice(0, 4).join(' · ');
+  if (preview) {
+    ctx.fillStyle = '#444';
+    ctx.font = '11px sans-serif';
+    ctx.fillText(preview.length > 50 ? preview.slice(0,50)+'…' : preview, labelCanvas.width / 2, qrSize + 90);
+  }
+
+  // Border
+  ctx.strokeStyle = '#2d5a3d';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(1.5, 1.5, labelCanvas.width - 3, labelCanvas.height - 3);
+
+  // Download
+  const link = document.createElement('a');
+  link.download = 'eske-' + currentQrBox.name.replace(/[^a-zA-Z0-9æøåÆØÅ]/g, '_') + '.png';
+  link.href = labelCanvas.toDataURL('image/png');
+  link.click();
+}
+
 // ===== UTILS =====
 function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -900,6 +1055,7 @@ load();
 updateVehicleDefaults();
 if (!checkScanMode()) { renderBoxes(); }
 document.getElementById('qr-modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.getElementById('edit-modal').addEventListener('click', function(e) { if (e.target === this) closeEditModal(); });
 </script>
 </body>
 </html>
